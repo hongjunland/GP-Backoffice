@@ -3,7 +3,8 @@ package com.example.demo.attendance.adapter.in.web;
 import com.example.demo.attendance.adapter.in.request.RegisterAttendanceRequest;
 import com.example.demo.attendance.application.port.in.command.RegisterAttendanceCommand;
 import com.example.demo.attendance.application.port.in.usecase.RegisterAttendanceUseCase;
-import com.example.demo.attendance.global.utils.ReturnObject;
+import com.example.demo.common.SuccessApiResponse;
+import com.example.demo.common.annotaion.WebAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/attendance")
 public class AttendanceRegisterController {
@@ -22,7 +23,7 @@ public class AttendanceRegisterController {
     private final RegisterAttendanceUseCase registerAttendanceUseCase;
 
     @PostMapping("/register")
-    public ResponseEntity<ReturnObject> registerAttendance(
+    public SuccessApiResponse registerAttendance(
             @RequestBody List<RegisterAttendanceRequest> registerAttendanceRequests
     ) {
 
@@ -41,11 +42,6 @@ public class AttendanceRegisterController {
             registerAttendanceUseCase.registerAttendance(command);
         }
 
-        ReturnObject returnObject = ReturnObject.builder()
-                .success(true)
-                .data("DB에 적재되었습니다.")
-                .build();
-
-        return ResponseEntity.status(HttpStatus.OK).body(returnObject);
+        return SuccessApiResponse.of(null);
     }
 }

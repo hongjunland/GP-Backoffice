@@ -4,7 +4,7 @@ import com.example.demo.attendance.application.port.in.command.RegisterAttendanc
 import com.example.demo.attendance.application.port.in.usecase.RegisterAttendanceUseCase;
 import com.example.demo.attendance.application.port.out.SaveAttendancePort;
 import com.example.demo.attendance.domain.Attendance;
-import com.example.demo.attendance.global.annotation.UseCase;
+import com.example.demo.common.annotaion.UseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
