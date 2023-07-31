@@ -33,7 +33,6 @@ public class Attendance {
 
     public AttendanceJpaEntity toJpaEntity() {
         return AttendanceJpaEntity.builder()
-                .id(attendanceId.getValue())
                 .userId(userId)
                 .department(department)
                 .name(name)
