@@ -1,8 +1,8 @@
 package com.example.demo.attendance.adapter.in.request;
 
-import com.example.demo.attendance.global.validation.SelfValidating;
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;
+import com.example.demo.common.SelfValidating;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 

@@ -1,8 +1,9 @@
 package com.example.demo.attendance.adapter.out.persistence;
 
+
 import com.example.demo.attendance.application.port.out.SaveAttendancePort;
-import com.example.demo.attendance.global.annotation.PersistenceAdapter;
 import com.example.demo.attendance.domain.Attendance;
+import com.example.demo.common.annotaion.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter
