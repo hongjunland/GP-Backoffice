@@ -28,6 +28,7 @@ public class WebSecurityConfig {
                 .httpBasic().disable()
                 .authorizeHttpRequests((auth) -> auth
                         .antMatchers(HttpMethod.POST, "/api/v1/auth/login", "/api/v1/users").permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/v1/attendance/register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new TokenAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
