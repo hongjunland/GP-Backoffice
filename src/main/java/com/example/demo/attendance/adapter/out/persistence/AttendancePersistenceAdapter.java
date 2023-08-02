@@ -15,7 +15,7 @@ public class AttendancePersistenceAdapter
 
     @Override
     public void saveAttendance(Attendance attendance) {
-        attendanceJpaRepo.saveAndUpdateAttendance(mapper.mapToJpaEntity(attendance));
+        attendanceJpaRepo.saveAttendance(mapper.mapToJpaEntity(attendance));
     }
 
 }

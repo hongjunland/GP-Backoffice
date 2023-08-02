@@ -23,7 +23,7 @@ public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
 
     @Override
     @Transactional
-    public void saveAndUpdateAttendance(AttendanceJpaEntity attendanceJpaEntity) {
+    public void saveAttendance(AttendanceJpaEntity attendanceJpaEntity) {
         long affected = updateAttendance(attendanceJpaEntity);
         if (affected == 0) {
             insertAttendance(attendanceJpaEntity);
