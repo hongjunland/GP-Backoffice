@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @UseCase
 @Transactional
 @RequiredArgsConstructor
-public class registerAttendanceService implements RegisterAttendanceUseCase {
+public class RegisterAttendanceService implements RegisterAttendanceUseCase {
 
     private final SaveAttendancePort saveAttendancePort;
 

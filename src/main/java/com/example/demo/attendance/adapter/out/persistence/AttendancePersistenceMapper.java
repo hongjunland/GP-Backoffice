@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AttendancePersistenceMapper {
-
     public Attendance mapToDomainEntity(AttendanceJpaEntity attendanceJpaEntity) {
 
         return Attendance.builder()
