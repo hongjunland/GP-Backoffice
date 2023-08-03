@@ -21,6 +21,7 @@ import java.time.LocalTime;
 import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("AttendancePersistenceAdapter 테스트")
 public class AttendancePersistenceAdapterTest {
 
     @Mock

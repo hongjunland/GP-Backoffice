@@ -7,6 +7,7 @@ import com.example.demo.attendance.application.port.in.usecase.RegisterAttendanc
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,6 +25,7 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("RegisterAttendanceController 테스트")
 public class RegisterAttendanceControllerTest {
 
     @Autowired
@@ -54,6 +56,7 @@ public class RegisterAttendanceControllerTest {
     }
 
     @Test
+    @DisplayName("registerAttendance의 registerAttendance 호출 검사")
     public void registerAttendanceTest() throws Exception {
         // when
         registerAttendanceController.registerAttendance(requests);

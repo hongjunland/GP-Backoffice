@@ -23,6 +23,7 @@ import static org.mockito.Mockito.times;
 
 // 단위 테스트를 진행하기 위함, junit5는 MockitoExtension를 사용해야함.
 @ExtendWith(MockitoExtension.class)
+@DisplayName("RegisterAttendanceService 테스트")
 public class RegisterAttendanceServiceTest {
 
     @Mock // mock 객체 주입을 해주기 위함. -> 빈 객체 주입은 아님(스프링 컨텍스트에서 관리 안 함)
