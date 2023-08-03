@@ -26,6 +26,7 @@ import java.util.Set;
 @UseCase
 @Transactional
 class LoginService implements LoginUseCase, UserDetailsService {
+//class LoginService implements LoginUseCase {
     private final LoadUserPort loadUserPort;
     private final TokenGeneratorPort tokenGeneratorPort;
     private final PasswordEncoderPort passwordEncoderPort;

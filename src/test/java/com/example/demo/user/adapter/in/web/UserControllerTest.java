@@ -7,14 +7,20 @@ import com.example.demo.user.application.port.in.command.CreateUserCommand;
 import com.example.demo.user.application.port.out.response.CreateUserResponse;
 import com.example.demo.user.application.port.out.response.UserResponse;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("유저관련 컨트롤러 테스트")
+@ExtendWith(MockitoExtension.class)
 class UserControllerTest {
     @InjectMocks
     private UserController userController;
@@ -22,10 +28,7 @@ class UserControllerTest {
     private CreateUserUseCase createUserUseCase;
     @Mock
     private GetUserQuery getUserQuery;
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+    @DisplayName("유저 생성 테스트")
     @Test
     public void shouldCreateUser_whenPostRequest(){
         // Given
@@ -46,7 +49,9 @@ class UserControllerTest {
         // Then
         verify(createUserUseCase, times(1)).createUser(userCommand);
         assertEquals(createUserResponse, response.getData());
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
+    @DisplayName("유저 정보 단일 조회")
     @Test
     public void shouldGetUser_whenGetRequest(){
         // Given
@@ -65,6 +70,7 @@ class UserControllerTest {
         assertEquals(userResponse, response.getData());
 
     }
+    @DisplayName("현재 로그인된 내 정보 조회")
     @Test
     public void shouldGetCurrentUser_whenGetRequest(){
         // Given
