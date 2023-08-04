@@ -1,7 +1,7 @@
 package com.example.demo.user.application.service;
 
 import com.example.demo.user.application.port.out.LoadUserPort;
-import com.example.demo.user.application.port.out.response.UserResponse;
+import com.example.demo.user.adapter.in.web.response.UserResponse;
 import com.example.demo.user.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,7 @@ class LoadUserServiceTest {
     public void setup(){
 
     }
-    @DisplayName("유저 id기반 단일조회 테스트")
+    @DisplayName("유저 id 기반 단일조회 테스트")
     @Test
     public void getUser(){
         // Given
@@ -46,4 +46,5 @@ class LoadUserServiceTest {
         verify(loadUserPort, times(1)).loadById(1L);
         Assertions.assertEquals(userId, userResponse.getId());
     }
+
 }

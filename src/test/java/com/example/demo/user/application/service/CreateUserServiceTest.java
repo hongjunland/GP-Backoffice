@@ -4,7 +4,7 @@ package com.example.demo.user.application.service;
 import com.example.demo.user.application.port.in.command.CreateUserCommand;
 import com.example.demo.user.application.port.out.CreateUserPort;
 import com.example.demo.user.application.port.out.PasswordEncoderPort;
-import com.example.demo.user.application.port.out.response.CreateUserResponse;
+import com.example.demo.user.adapter.in.web.response.CreateUserResponse;
 import com.example.demo.user.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

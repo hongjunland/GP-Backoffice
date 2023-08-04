@@ -1,4 +1,4 @@
-package com.example.demo.user.application.port.out.response;
+package com.example.demo.user.adapter.in.web.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

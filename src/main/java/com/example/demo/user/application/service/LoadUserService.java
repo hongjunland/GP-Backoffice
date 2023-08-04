@@ -3,7 +3,7 @@ package com.example.demo.user.application.service;
 import com.example.demo.common.annotaion.UseCase;
 import com.example.demo.user.application.port.in.GetUserQuery;
 import com.example.demo.user.application.port.out.LoadUserPort;
-import com.example.demo.user.application.port.out.response.UserResponse;
+import com.example.demo.user.adapter.in.web.response.UserResponse;
 import com.example.demo.user.domain.User;
 import lombok.RequiredArgsConstructor;
 

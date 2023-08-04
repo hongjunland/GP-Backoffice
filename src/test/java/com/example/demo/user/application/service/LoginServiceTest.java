@@ -1,14 +1,13 @@
 package com.example.demo.user.application.service;
 
 import com.example.demo.common.utils.Token;
-import com.example.demo.common.utils.UserDetailsImpl;
 import com.example.demo.user.application.port.in.command.LoginCommand;
 import com.example.demo.user.application.port.out.LoadUserPort;
 import com.example.demo.user.application.port.out.PasswordEncoderPort;
 import com.example.demo.user.application.port.out.TokenGeneratorPort;
-import com.example.demo.user.application.port.out.response.LoginResponse;
+import com.example.demo.user.adapter.in.web.response.LoginResponse;
 import com.example.demo.user.domain.User;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,85 +17,67 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @DisplayName("로그인 서비스 테스트")
 @ExtendWith(MockitoExtension.class)
 class LoginServiceTest {
     @InjectMocks
     private LoginService loginService;
-
     @Mock
     private LoadUserPort loadUserPort;
-
     @Mock
     private TokenGeneratorPort tokenGeneratorPort;
-
     @Mock
     private PasswordEncoderPort passwordEncoderPort;
-
     @Mock
-    private AuthenticationManagerBuilder authBuilder;
-
-    @Mock
-    private AuthenticationManager authenticationManager;
-
-    @BeforeEach
-    void setup() {
-        authBuilder = Mockito.mock(AuthenticationManagerBuilder.class);
-        when(authBuilder.getObject()).thenReturn(authenticationManager);
-    }
+    private AuthenticationManager authManager;
 
     @DisplayName("로그인 테스트")
     @Test
     void loginWithValidCredentialsReturnsLoginResponse() {
-        // given
-        String email = "test@test.com";
-        String password = "password";
-        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        UserDetails userDetails = UserDetailsImpl.builder()
-                .username(Long.toString(1L))
-                .password(password)
-                .authorities(authorities)
+        String email = "zxc123@naver.com";
+        String rawPassword = "rawPassword";
+        String encodedPassword = "encodedPassword";
+
+        LoginCommand loginCommand = LoginCommand.builder()
+                .email(email)
+                .password(rawPassword)
                 .build();
+        // given
         User user = User.builder()
                 .id(new User.UserId(1L))
+                .name("홍길동")
+                .nickname("닉네임")
+                .password(encodedPassword)
                 .email(email)
-                .password(password)
                 .build();
-        LoginCommand command = new LoginCommand(email, password);
         Token token = Token.builder()
-                .grantToken("Bearer")
-                .accessToken("accessTokenSample")
-                .refreshToken("refreshTokenSample")
-                .expiration(Instant.now().plusMillis(36000000))
+                .accessToken("Bearer accessToken")
+                .refreshToken("refreshToken")
+                .expiration(Instant.now().plusMillis(3600000L))
                 .build();
-        Authentication mockAuthentication = new UsernamePasswordAuthenticationToken(email, password);
+        Authentication auth = Mockito.mock(Authentication.class);
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginCommand.getEmail(), loginCommand.getPassword());
+        when(loadUserPort.loadByEmail(loginCommand.getEmail())).thenReturn(user);
+        when(passwordEncoderPort.matches(rawPassword, encodedPassword)).thenReturn(true);
+        when(authManager.authenticate(authToken)).thenReturn(auth);
+        when(tokenGeneratorPort.generateToken(any())).thenReturn(token);
 
-        when(loadUserPort.loadByEmail(email)).thenReturn(user);
-        when(passwordEncoderPort.matches(password, user.getPassword())).thenReturn(true);
-        when(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password))).thenReturn(mockAuthentication);
-        when(tokenGeneratorPort.generateToken(mockAuthentication)).thenReturn(token);
+        // When
+        LoginResponse loginResponse = loginService.login(loginCommand);
 
-        // when
-        LoginResponse result = loginService.login(command);
-
-        // then
-        assertEquals(token.getAccessToken(), result.getAccessToken());
-        assertEquals(token.getRefreshToken(), result.getRefreshToken());
-        assertEquals(token.getExpiration().toString(), result.getExpiration());
+        // Then
+        verify(loadUserPort, times(1)).loadByEmail(email);
+        verify(passwordEncoderPort, times(1)).matches(loginCommand.getPassword(), user.getPassword());
+        verify(tokenGeneratorPort, times(1)).generateToken(auth);
+        verify(authManager, times(1)).authenticate(authToken);
+        Assertions.assertEquals(loginResponse.getAccessToken(), token.getAccessToken());
+        Assertions.assertEquals(loginResponse.getRefreshToken(), token.getRefreshToken());
+        Assertions.assertEquals(loginResponse.getExpiration(), token.getExpiration().toString());
     }
 }

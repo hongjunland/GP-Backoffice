@@ -4,15 +4,13 @@ import com.example.demo.common.SuccessApiResponse;
 import com.example.demo.user.application.port.in.CreateUserUseCase;
 import com.example.demo.user.application.port.in.GetUserQuery;
 import com.example.demo.user.application.port.in.command.CreateUserCommand;
-import com.example.demo.user.application.port.out.response.CreateUserResponse;
-import com.example.demo.user.application.port.out.response.UserResponse;
-import org.junit.jupiter.api.BeforeEach;
+import com.example.demo.user.adapter.in.web.response.CreateUserResponse;
+import com.example.demo.user.adapter.in.web.response.UserResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 

@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 
 @DisplayName("유저관련 조회 어댑터 테스트")
 @ExtendWith(MockitoExtension.class)
-public class UserLoadPersistenceAdapterTest {
+class UserLoadPersistenceAdapterTest {
     @Mock
     private SpringDataUserRepository userRepository;
     @Mock
