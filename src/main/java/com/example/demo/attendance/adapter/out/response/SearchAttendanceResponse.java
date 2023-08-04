@@ -3,6 +3,7 @@ package com.example.demo.attendance.adapter.out.response;
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import java.time.LocalTime;
 
 @Getter
 @Builder
+@EqualsAndHashCode
 public class SearchAttendanceResponse {
 
     private Department department;

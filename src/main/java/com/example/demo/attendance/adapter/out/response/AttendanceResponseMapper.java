@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 public class AttendanceResponseMapper {
 
     // 검색 결과 조회 리스폰
-    public List<SearchAttendanceResponse> mapToSearchAttendanceResponses(List<Attendance> attendances) {
+    public static List<SearchAttendanceResponse> mapToSearchAttendanceResponses(List<Attendance> attendances) {
         List<SearchAttendanceResponse> searchAttendanceResponses = new ArrayList<>();
         for (Attendance attendance : attendances) {
             SearchAttendanceResponse response = SearchAttendanceResponse.builder()
@@ -27,6 +27,5 @@ public class AttendanceResponseMapper {
 
         return searchAttendanceResponses;
     }
-
 
 }
