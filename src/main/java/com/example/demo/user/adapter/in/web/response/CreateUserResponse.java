@@ -10,8 +10,6 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @Getter
 @Builder
-@ToString
-@Valid
 public class CreateUserResponse {
     private final Long id;
 

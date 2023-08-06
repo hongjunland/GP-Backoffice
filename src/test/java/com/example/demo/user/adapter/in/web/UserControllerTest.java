@@ -6,6 +6,7 @@ import com.example.demo.user.application.port.in.GetUserQuery;
 import com.example.demo.user.application.port.in.command.CreateUserCommand;
 import com.example.demo.user.adapter.in.web.response.CreateUserResponse;
 import com.example.demo.user.adapter.in.web.response.UserResponse;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,8 +65,17 @@ class UserControllerTest {
 
         //When
         SuccessApiResponse response = userController.getUserById(1L);
+
+        //Then
         verify(getUserQuery, times(1)).getUser(1L);
-        assertEquals(userResponse, response.getData());
+        assertEquals(response.getStatus(), HttpStatus.OK.value());
+        UserResponse resultUserResponse = (UserResponse) response.getData();
+        Assertions.assertEquals(resultUserResponse, userResponse);
+        Assertions.assertEquals(resultUserResponse.getId(), userResponse.getId());
+        Assertions.assertEquals(resultUserResponse.getPassword(), userResponse.getPassword());
+        Assertions.assertEquals(resultUserResponse.getName(), userResponse.getName());
+        Assertions.assertEquals(resultUserResponse.getEmail(), userResponse.getEmail());
+        Assertions.assertEquals(resultUserResponse.getNickname(), userResponse.getNickname());
 
     }
     @DisplayName("현재 로그인된 내 정보 조회")
@@ -86,6 +96,7 @@ class UserControllerTest {
 
         // Then
         verify(getUserQuery, times(1)).getUser(1L);
+        assertEquals(userResponse.getId(), ((UserResponse) response.getData()).getId());
         assertEquals(userResponse, response.getData());
 
     }

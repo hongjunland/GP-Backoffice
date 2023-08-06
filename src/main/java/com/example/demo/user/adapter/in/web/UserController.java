@@ -21,7 +21,8 @@ class UserController {
     private final GetUserQuery getUserQuery;
     @PostMapping
     public SuccessApiResponse createUser(@RequestBody @Valid CreateUserCommand userCommand){
-        return SuccessApiResponse.of(createUserUseCase.createUser(userCommand));
+//        return SuccessApiResponse.of(createUserUseCase.createUser(userCommand));
+        return SuccessApiResponse.of();
     }
     @GetMapping
     public SuccessApiResponse getCurrentUser(@CurrentUser Long userId){

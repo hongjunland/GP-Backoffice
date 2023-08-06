@@ -18,8 +18,8 @@ class PasswordEncoderAdapter implements PasswordEncoderPort {
     }
 
     @Override
-    public boolean matches(String password, String encodedPassword)  {
-        return Optional.of(passwordEncoder.matches(password, encodedPassword))
+    public boolean matches(String rawPassword, String encodedPassword)  {
+        return Optional.of(passwordEncoder.matches(rawPassword, encodedPassword))
                 .filter(matches -> matches)
                 .orElse(false);
     }
