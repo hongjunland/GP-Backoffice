@@ -1,10 +1,10 @@
 package com.example.demo.user.adapter.in.web;
 
 import com.example.demo.common.SuccessApiResponse;
+import com.example.demo.user.adapter.in.web.request.CreateUserRequest;
 import com.example.demo.user.application.port.in.CreateUserUseCase;
 import com.example.demo.user.application.port.in.GetUserQuery;
 import com.example.demo.user.application.port.in.command.CreateUserCommand;
-import com.example.demo.user.adapter.in.web.response.CreateUserResponse;
 import com.example.demo.user.adapter.in.web.response.UserResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -31,23 +31,13 @@ class UserControllerTest {
     @Test
     public void shouldCreateUser_whenPostRequest(){
         // Given
-        CreateUserCommand userCommand = new CreateUserCommand("zxc123", "비밀번호1","이름1","별명1");
-        CreateUserResponse createUserResponse = CreateUserResponse.builder()
-                .id(1L)
-                .email("zxc123@naver.com")
-                .password("비밀번호1")
-                .name("이름1")
-                .nickname("별명1")
-                .build();
-
-        when(createUserUseCase.createUser(userCommand)).thenReturn(createUserResponse);
+        CreateUserRequest userRequest = new CreateUserRequest("zxc123@naver.com", "비밀번호1@@", "홍길동", "닉네임12");
 
         // When
-        SuccessApiResponse response = userController.createUser(userCommand);
+        SuccessApiResponse response = userController.createUser(userRequest);
 
         // Then
-        verify(createUserUseCase, times(1)).createUser(userCommand);
-        assertEquals(createUserResponse, response.getData());
+        verify(createUserUseCase, times(1)).createUser(any());
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
     @DisplayName("유저 정보 단일 조회")

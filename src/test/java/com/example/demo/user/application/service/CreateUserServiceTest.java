@@ -4,7 +4,6 @@ package com.example.demo.user.application.service;
 import com.example.demo.user.application.port.in.command.CreateUserCommand;
 import com.example.demo.user.application.port.out.CreateUserPort;
 import com.example.demo.user.application.port.out.PasswordEncoderPort;
-import com.example.demo.user.adapter.in.web.response.CreateUserResponse;
 import com.example.demo.user.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,20 +52,11 @@ class CreateUserServiceTest {
         when(createUserPort.createUser(any(User.class))).thenReturn(expectedUser);
 
         // When
-        CreateUserResponse createUserResponse = createUserService.createUser(createUserCommand);
-
+        createUserService.createUser(createUserCommand);
         // Then
-        Assertions.assertEquals(expectedUser.getId().getValue(), createUserResponse.getId());
         verify(createUserPort, times(1)).createUser(any(User.class));
         verify(passwordEncoderPort, times(1)).encode(createUserCommand.getPassword());
 
-        assertAll("User",
-                () -> Assertions.assertEquals(expectedUser.getId().getValue(), createUserResponse.getId()),
-                () -> Assertions.assertEquals(expectedUser.getName(), createUserResponse.getName()),
-                () -> Assertions.assertEquals(expectedUser.getNickname(), createUserResponse.getNickname()),
-                () -> Assertions.assertEquals(expectedUser.getEmail(), createUserResponse.getEmail()),
-                () -> Assertions.assertEquals(expectedUser.getPassword(), createUserResponse.getPassword())
-        );
     }
 
 }

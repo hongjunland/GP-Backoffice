@@ -3,6 +3,7 @@ package com.example.demo.user.adapter.in.web;
 
 import com.example.demo.common.SuccessApiResponse;
 import com.example.demo.common.annotaion.WebAdapter;
+import com.example.demo.user.adapter.in.web.request.LoginRequest;
 import com.example.demo.user.application.port.in.LoginUseCase;
 import com.example.demo.user.application.port.in.command.LoginCommand;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @WebAdapter
 @RestController
@@ -19,7 +22,11 @@ class AuthController {
     private final LoginUseCase loginUseCase;
 
     @PostMapping("/login")
-    public SuccessApiResponse login(@RequestBody LoginCommand loginCommand){
+    public SuccessApiResponse login(@RequestBody @Valid LoginRequest loginRequest){
+        LoginCommand loginCommand = LoginCommand.builder()
+                .email(loginRequest.getEmail())
+                .password(loginRequest.getPassword())
+                .build();
         return SuccessApiResponse.of(loginUseCase.login(loginCommand));
     }
 }

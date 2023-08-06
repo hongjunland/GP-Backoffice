@@ -1,6 +1,7 @@
 package com.example.demo.user.adapter.in.web;
 
 import com.example.demo.common.SuccessApiResponse;
+import com.example.demo.user.adapter.in.web.request.LoginRequest;
 import com.example.demo.user.adapter.in.web.response.LoginResponse;
 import com.example.demo.user.application.port.in.LoginUseCase;
 import com.example.demo.user.application.port.in.command.LoginCommand;
@@ -12,6 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @DisplayName("인증 컨트롤러 테스트")
 @ExtendWith(MockitoExtension.class)
@@ -26,18 +29,12 @@ class AuthControllerTest {
     @Test
     public void loginTest(){
         // Given
-        LoginCommand loginCommand = LoginCommand.builder()
-                .email("zxc123@naver.com")
-                .password("zxczxczxc")
-                .build();
-        LoginResponse loginResponse = Mockito.mock(LoginResponse.class);
-        Mockito.when(loginUseCase.login(loginCommand)).thenReturn(loginResponse);
-
+        LoginRequest loginRequest= new LoginRequest("zxc123@naver.com", "zxczxczxc");
         // when
-        SuccessApiResponse successApiResponse = authController.login(loginCommand);
+        SuccessApiResponse successApiResponse = authController.login(loginRequest);
 
         // then
-        Mockito.verify(loginUseCase, Mockito.times(1)).login(loginCommand);
+        Mockito.verify(loginUseCase, Mockito.times(1)).login(any());
         Assertions.assertThat(successApiResponse.getStatus())
                 .isEqualTo(200);
     }

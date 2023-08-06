@@ -44,29 +44,50 @@ dependencies {
 //	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
 }
-test {
-    finalizedBy jacocoTestReport  // 테스트 종료후 항상 리포트 생성
+tasks.named('test') {
+    useJUnitPlatform()
+    finalizedBy 'jacocoTestReport'  // 테스트 종료후 항상 리포트 생성
+}
+jacoco {
+    toolVersion = '0.8.8'
 }
 
 jacocoTestReport {
     dependsOn test // 리포트 생성을 위해서는 test가 먼저 완료되어야 함
+    reports {
+        xml.required = false
+        csv.required = false
+        html.required = true
+    }
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, excludes: [
+                            "**/*Application*",
+                            '**/*Request*',
+                            '**/*Response*',
+                            '**/Swagger*',
+                            '**/PasswordEncoderConfig*',
+                            '**/JpaAuditingConfig*',
+                            '**/common/**',
+                            '**/*Builder*',
+                    ])
+                })
+        )
+    }
 }
 jacocoTestCoverageVerification {
-	violationRules {
-		rule {
-			excludes = [
-					"**/*Application*",
-					"**/*Config*",
-					"**/*Dto*",
-					"**/*Request*",
-					"**/*Response*",
-					"**/*Interceptor*",
-					"**/*Exception*",
-					'**/common/**'
-			]
-		}
-	}
-}
-tasks.named('test') {
-    useJUnitPlatform()
+    violationRules {
+        rule {
+            excludes = [
+                    "**/*Application*",
+                    '**/*Request*',
+                    '**/*Response*',
+                    '**/Swagger*',
+                    '**/PasswordEncoderConfig*',
+                    '**/JpaAuditingConfig*',
+                    '**/common/**'
+            ]
+        }
+    }
 }
