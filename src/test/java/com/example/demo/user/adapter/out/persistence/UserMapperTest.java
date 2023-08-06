@@ -17,6 +17,7 @@ class UserMapperTest {
     @InjectMocks
     private UserMapper userMapper;
 
+    @DisplayName("유저 JpaEntity -> 유저 Domain")
     @Test
     void mapToDomainEntity() {
         UserJpaEntity userJpaEntity = UserJpaEntity.builder()
@@ -36,10 +37,10 @@ class UserMapperTest {
         assertThat(user.getName()).isEqualTo(userJpaEntity.getName());
     }
 
+    @DisplayName("유저 Domain -> 유저 JpaEntity")
     @Test
     void mapToJpaEntity() {
         User user = User.builder()
-//                .id(new User.UserId(1L))
                 .email("test@example.com")
                 .nickname("nickname")
                 .password("password")
@@ -48,7 +49,6 @@ class UserMapperTest {
 
         UserJpaEntity userJpaEntity = userMapper.mapToJpaEntity(user);
 
-//        assertThat(userJpaEntity.getId()).isEqualTo(user.getId().getValue());
         assertThat(userJpaEntity.getEmail()).isEqualTo(user.getEmail());
         assertThat(userJpaEntity.getNickname()).isEqualTo(user.getNickname());
         assertThat(userJpaEntity.getPassword()).isEqualTo(user.getPassword());

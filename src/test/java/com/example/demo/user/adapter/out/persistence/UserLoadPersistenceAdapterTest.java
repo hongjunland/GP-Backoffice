@@ -149,18 +149,4 @@ class UserLoadPersistenceAdapterTest {
         verify(userRepository, times(1)).findByNickname(nickname);
         verify(userMapper, times(1)).mapToDomainEntity(userJpaEntity);
     }
-    @Test
-    @DisplayName("토큰 생성 성공")
-    public void givenAuthentication_whenGenerateToken_thenTokenIsCreated() {
-        // Given
-        Token expectedToken = new Token();
-        when(tokenProvider.generateToken(authentication)).thenReturn(expectedToken);
-
-        // When
-        Token result = userLoadPersistenceAdapter.generateToken(authentication);
-
-        // Then
-        assertEquals(expectedToken, result);
-        verify(tokenProvider, times(1)).generateToken(authentication);
-    }
 }

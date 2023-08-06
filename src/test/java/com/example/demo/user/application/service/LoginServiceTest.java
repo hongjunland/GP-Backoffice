@@ -3,6 +3,7 @@ package com.example.demo.user.application.service;
 import com.example.demo.common.utils.Token;
 import com.example.demo.user.application.port.in.command.LoginCommand;
 import com.example.demo.user.application.port.out.LoadUserPort;
+import com.example.demo.user.application.port.out.LoginPort;
 import com.example.demo.user.application.port.out.PasswordEncoderPort;
 import com.example.demo.user.application.port.out.TokenGeneratorPort;
 import com.example.demo.user.adapter.in.web.response.LoginResponse;
@@ -31,11 +32,10 @@ class LoginServiceTest {
     @Mock
     private LoadUserPort loadUserPort;
     @Mock
-    private TokenGeneratorPort tokenGeneratorPort;
-    @Mock
     private PasswordEncoderPort passwordEncoderPort;
     @Mock
-    private AuthenticationManager authManager;
+    private LoginPort loginPort;
+
 
     @DisplayName("로그인 테스트")
     @Test
@@ -65,17 +65,13 @@ class LoginServiceTest {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginCommand.getEmail(), loginCommand.getPassword());
         when(loadUserPort.loadByEmail(loginCommand.getEmail())).thenReturn(user);
         when(passwordEncoderPort.matches(rawPassword, encodedPassword)).thenReturn(true);
-        when(authManager.authenticate(authToken)).thenReturn(auth);
-        when(tokenGeneratorPort.generateToken(any())).thenReturn(token);
-
+        when(loginPort.login(loginCommand.getEmail(), loginCommand.getPassword())).thenReturn(token);
         // When
         LoginResponse loginResponse = loginService.login(loginCommand);
 
         // Then
         verify(loadUserPort, times(1)).loadByEmail(email);
         verify(passwordEncoderPort, times(1)).matches(loginCommand.getPassword(), user.getPassword());
-        verify(tokenGeneratorPort, times(1)).generateToken(auth);
-        verify(authManager, times(1)).authenticate(authToken);
         Assertions.assertEquals(loginResponse.getAccessToken(), token.getAccessToken());
         Assertions.assertEquals(loginResponse.getRefreshToken(), token.getRefreshToken());
         Assertions.assertEquals(loginResponse.getExpiration(), token.getExpiration().toString());
