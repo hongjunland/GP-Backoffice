@@ -22,7 +22,7 @@ class AuthController {
     private final LoginUseCase loginUseCase;
 
     @PostMapping("/login")
-    public SuccessApiResponse login(@RequestBody @Valid LoginRequest loginRequest){
+    public SuccessApiResponse login(@RequestBody LoginRequest loginRequest){
         LoginCommand loginCommand = LoginCommand.builder()
                 .email(loginRequest.getEmail())
                 .password(loginRequest.getPassword())
