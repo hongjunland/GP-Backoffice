@@ -22,18 +22,4 @@ public class RegisterAttendanceCommand {
     private final LocalTime startTime;
     private final LocalTime endTime;
 
-    // command에서 직접적으로 Entity를 생성하거나 변경하는 것은 두 레이어 사이에 의존성이 생기게 됨.
-    // 추후 service 레이어에서 변경 예정입니다.
-    public Attendance toEntity() {
-        return Attendance.builder()
-                .userId(userId)
-                .department(department)
-                .name(name)
-                .workDate(workDate)
-                .dayType(dayType)
-                .startTime(startTime)
-                .endTime(endTime)
-                .build();
-    }
-
 }

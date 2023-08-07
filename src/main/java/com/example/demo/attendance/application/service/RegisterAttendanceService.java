@@ -14,13 +14,22 @@ import javax.transaction.Transactional;
 @UseCase
 @Transactional
 @RequiredArgsConstructor
-public class registerAttendanceService implements RegisterAttendanceUseCase {
+public class RegisterAttendanceService implements RegisterAttendanceUseCase {
 
     private final SaveAttendancePort saveAttendancePort;
 
     @Override
     public void registerAttendance(RegisterAttendanceCommand command) {
-        Attendance attendance = command.toEntity();
+        Attendance attendance = Attendance.builder()
+                .userId(command.getUserId())
+                .department(command.getDepartment())
+                .name(command.getName())
+                .workDate(command.getWorkDate())
+                .dayType(command.getDayType())
+                .startTime(command.getStartTime())
+                .endTime(command.getEndTime())
+                .build();
+
         saveAttendancePort.saveAttendance(attendance);
     }
 

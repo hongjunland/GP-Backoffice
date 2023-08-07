@@ -13,8 +13,8 @@ import java.time.LocalTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Attendance {
 
-    private AttendanceId attendanceId;
-    private Long userId;
+    private final AttendanceId attendanceId;
+    private final Long userId;
     private Department department;
     private String name;
     private LocalDate workDate;
@@ -33,7 +33,6 @@ public class Attendance {
 
     public AttendanceJpaEntity toJpaEntity() {
         return AttendanceJpaEntity.builder()
-                .id(attendanceId.getValue())
                 .userId(userId)
                 .department(department)
                 .name(name)
