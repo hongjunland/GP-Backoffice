@@ -2,13 +2,10 @@ package com.example.demo.user.adapter.out.persistence;
 
 import com.example.demo.common.annotaion.PersistenceAdapter;
 import com.example.demo.common.exception.UserNotFoundException;
-import com.example.demo.common.utils.Token;
 import com.example.demo.common.utils.TokenProvider;
 import com.example.demo.user.application.port.out.LoadUserPort;
-import com.example.demo.user.application.port.out.TokenGeneratorPort;
 import com.example.demo.user.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 
 @RequiredArgsConstructor
 @PersistenceAdapter

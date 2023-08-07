@@ -5,7 +5,6 @@ import com.example.demo.user.application.port.in.command.LoginCommand;
 import com.example.demo.user.application.port.out.LoadUserPort;
 import com.example.demo.user.application.port.out.LoginPort;
 import com.example.demo.user.application.port.out.PasswordEncoderPort;
-import com.example.demo.user.application.port.out.TokenGeneratorPort;
 import com.example.demo.user.adapter.in.web.response.LoginResponse;
 import com.example.demo.user.domain.User;
 import org.junit.jupiter.api.Assertions;
