@@ -1,5 +1,11 @@
 #http://localhost:8080/swagger-ui/index.html
+server:
+  port: 8080
+  servlet:
+    context-path: /attendance-service
 spring:
+  application:
+    name: user-service
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

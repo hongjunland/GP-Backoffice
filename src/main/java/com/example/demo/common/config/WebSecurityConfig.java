@@ -34,7 +34,6 @@ public class WebSecurityConfig {
                         .antMatchers(HttpMethod.POST, "/api/v1/auth/login", "/api/v1/users").permitAll()
                         .anyRequest().authenticated()
                 )
-//                .authenticationManager()
                 .addFilterBefore(new TokenAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
