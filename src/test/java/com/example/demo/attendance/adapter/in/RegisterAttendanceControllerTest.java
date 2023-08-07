@@ -29,7 +29,7 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("RegisterAttendanceController 테스트")
+@DisplayName("RegisterAttendanceController 단위 테스트")
 public class RegisterAttendanceControllerTest {
 
     @Mock

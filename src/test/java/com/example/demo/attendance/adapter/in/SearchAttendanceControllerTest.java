@@ -27,7 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("SearchAttendanceController 테스트")
+@DisplayName("SearchAttendanceController 단위 테스트")
 public class SearchAttendanceControllerTest {
 
     @Mock

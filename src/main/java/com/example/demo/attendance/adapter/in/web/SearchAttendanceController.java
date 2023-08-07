@@ -1,7 +1,7 @@
 package com.example.demo.attendance.adapter.in.web;
 
 import com.example.demo.attendance.adapter.in.request.SearchAttendanceRequest;
-import com.example.demo.attendance.adapter.out.response.AttendanceResponseMapper;
+import com.example.demo.attendance.adapter.in.response.AttendanceResponseMapper;
 import com.example.demo.attendance.application.port.in.query.SearchAttendanceQuery;
 import com.example.demo.attendance.application.port.in.query.SearchAttendanceCriteria;
 import com.example.demo.attendance.domain.Attendance;

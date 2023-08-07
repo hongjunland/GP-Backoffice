@@ -1,4 +1,4 @@
-package com.example.demo.attendance.adapter.out.response;
+package com.example.demo.attendance.adapter.in.response;
 
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;

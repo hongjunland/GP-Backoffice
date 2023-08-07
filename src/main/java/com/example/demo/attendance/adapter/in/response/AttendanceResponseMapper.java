@@ -1,7 +1,6 @@
-package com.example.demo.attendance.adapter.out.response;
+package com.example.demo.attendance.adapter.in.response;
 
 import com.example.demo.attendance.domain.Attendance;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
