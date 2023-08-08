@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
 @Value

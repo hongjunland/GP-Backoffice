@@ -39,9 +39,9 @@ public class AttendancePersistenceAdapterTest {
     @InjectMocks
     private AttendancePersistenceAdapter adapter;
 
-    Attendance attendance;
-    AttendanceSearchPeriod attendanceSearchPeriod;
-    AttendanceJpaEntity attendanceJpaEntity;
+    private Attendance attendance;
+    private AttendanceSearchPeriod attendanceSearchPeriod;
+    private AttendanceJpaEntity attendanceJpaEntity;
 
     @BeforeEach
     void setUp() {
@@ -105,6 +105,7 @@ public class AttendancePersistenceAdapterTest {
         verify(mapper, times(1)).mapToDomainEntities(anyList());
 
         assertFalse(attendances.isEmpty());
+        assertEquals(1, attendances.size());
         assertEquals(attendance, attendances.get(0));
 
     }

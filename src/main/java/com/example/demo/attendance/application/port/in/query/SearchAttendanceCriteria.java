@@ -1,11 +1,11 @@
 package com.example.demo.attendance.application.port.in.query;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
 @Builder
 public class SearchAttendanceCriteria {
 

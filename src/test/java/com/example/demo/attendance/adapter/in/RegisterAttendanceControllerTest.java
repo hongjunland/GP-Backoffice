@@ -38,7 +38,7 @@ public class RegisterAttendanceControllerTest {
     @InjectMocks
     private RegisterAttendanceController registerAttendanceController;
 
-    List<RegisterAttendanceRequest> requests = new ArrayList<>();
+    private List<RegisterAttendanceRequest> requests = new ArrayList<>();
 
     @BeforeEach
     public void setup() {

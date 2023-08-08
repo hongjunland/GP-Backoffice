@@ -36,8 +36,8 @@ class AttendanceJpaRepoImplTest {
     @Mock
     private JPAQueryFactory jpaQueryFactory;
 
-    AttendanceJpaEntity attendanceJpaEntity;
-    QAttendanceJpaEntity qAttendanceJpaEntity = QAttendanceJpaEntity.attendanceJpaEntity;
+    private AttendanceJpaEntity attendanceJpaEntity;
+    private QAttendanceJpaEntity qAttendanceJpaEntity = QAttendanceJpaEntity.attendanceJpaEntity;
 
     @BeforeEach
     public void setup() {
@@ -56,16 +56,16 @@ class AttendanceJpaRepoImplTest {
     @DisplayName("AttendanceSearchPeriod이 있을 경우 검색 검증")
     void SearchAttendanceByPeriodTest() {
         // given
+        AttendanceSearchPeriod searchPeriod = AttendanceSearchPeriod.builder()
+                .startDate(LocalDate.now().minusDays(5))
+                .endDate(LocalDate.now().plusDays(5))
+                .build();
+
         JPAQuery<AttendanceJpaEntity> jpaQuery = mock(JPAQuery.class);
         when(jpaQueryFactory.select(qAttendanceJpaEntity)).thenReturn(jpaQuery);
         when(jpaQuery.from(qAttendanceJpaEntity)).thenReturn(jpaQuery);
         when(jpaQuery.where((Predicate) any())).thenReturn(jpaQuery);
         when(jpaQuery.fetch()).thenReturn(Collections.singletonList(attendanceJpaEntity));
-
-        AttendanceSearchPeriod searchPeriod = AttendanceSearchPeriod.builder()
-                .startDate(LocalDate.now().minusDays(5))
-                .endDate(LocalDate.now().plusDays(5))
-                .build();
 
         // when
         List<AttendanceJpaEntity> result = attendanceJpaRepo.searchAttendanceByPeriod(searchPeriod);

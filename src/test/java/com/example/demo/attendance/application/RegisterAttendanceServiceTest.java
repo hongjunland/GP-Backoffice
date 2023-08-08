@@ -32,7 +32,7 @@ public class RegisterAttendanceServiceTest {
     @InjectMocks // InjectMocks는 mock 어노테이션이 붙은 객체들을 의존할 객체.
     private RegisterAttendanceService registerAttendanceService;
 
-    RegisterAttendanceCommand command;
+    private RegisterAttendanceCommand command;
 
     @BeforeEach
     public void setup() {

@@ -8,10 +8,7 @@ import com.example.demo.attendance.domain.Attendance;
 import com.example.demo.common.SuccessApiResponse;
 import com.example.demo.common.annotaion.WebAdapter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +20,7 @@ public class SearchAttendanceController {
 
     private final SearchAttendanceQuery searchAttendanceQuery;
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public SuccessApiResponse searchAttendance(
             @RequestBody SearchAttendanceRequest searchAttendanceRequest
     ) {

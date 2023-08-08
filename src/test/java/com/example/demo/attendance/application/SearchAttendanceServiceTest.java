@@ -35,8 +35,8 @@ class SearchAttendanceServiceTest {
     @InjectMocks
     private SearchAttendanceService searchAttendanceService;
 
-    SearchAttendanceCriteria criteria;
-    Attendance mockAttendance;
+    private SearchAttendanceCriteria criteria;
+    private Attendance mockAttendance;
 
     @BeforeEach
     void setUp() {

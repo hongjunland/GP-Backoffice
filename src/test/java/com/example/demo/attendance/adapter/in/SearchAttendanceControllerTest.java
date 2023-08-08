@@ -36,9 +36,8 @@ public class SearchAttendanceControllerTest {
     @InjectMocks // InjectMocks 사용한 클래스에 있는 모든 메소드는 when으로 가정을 해준다.
     private SearchAttendanceController searchAttendanceController;
 
-    SearchAttendanceRequest request;
-    List<Attendance> attendances = new ArrayList<>();
-    SearchAttendanceCriteria criteria;
+    private SearchAttendanceRequest request;
+    private List<Attendance> attendances = new ArrayList<>();
 
     @BeforeEach
     public void setup() {
@@ -60,12 +59,6 @@ public class SearchAttendanceControllerTest {
                     .build();
             attendances.add(attendance);
         }
-
-        criteria = SearchAttendanceCriteria.builder()
-                .startDate(request.getStartDate())
-                .endDate(request.getEndDate())
-                .build();
-
     }
 
     @Test
