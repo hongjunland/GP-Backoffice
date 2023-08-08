@@ -18,17 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class GoogleController {
-    private final TokenProvider tokenProvider;
-    private final AuthenticationManager authenticationManager;
-
-    @GetMapping("/login/oauth2/code/google")
-    public ResponseEntity<?> googleLogin(@AuthenticationPrincipal OAuth2User principal) {
-        String email = principal.getAttribute("email");
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, "");
-        Authentication auth = authenticationManager.authenticate(authToken);
-        Token token = tokenProvider.generateToken(auth);
-        Authentication authentication = authenticationManager.authenticate(authToken);
-        String jwt = tokenProvider.generateToken(authToken);
-        return ResponseEntity.ok(jwt);
-    }
+//    private final TokenProvider tokenProvider;
+//    private final AuthenticationManager authenticationManager;
+//
+//    @GetMapping("/login/oauth2/code/google")
+//    public ResponseEntity<?> googleLogin(@AuthenticationPrincipal OAuth2User principal) {
+//        String email = principal.getAttribute("email");
+//        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, "");
+//        Authentication auth = authenticationManager.authenticate(authToken);
+//        Token token = tokenProvider.generateToken(auth);
+//        return ResponseEntity.ok(token);
+//    }
 }

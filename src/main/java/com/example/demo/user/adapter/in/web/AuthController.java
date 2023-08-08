@@ -9,6 +9,8 @@ import com.example.demo.user.application.port.in.LoginUseCase;
 import com.example.demo.user.application.port.in.command.LoginCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,9 +30,17 @@ class AuthController {
                 .build();
         return SuccessApiResponse.of(loginUseCase.login(loginCommand));
     }
-    @PostMapping("/login/google")
-    public SuccessApiResponse loginWithGoogle(@RequestBody GoogleLoginRequest accessToken){
-        System.out.println(accessToken.getAccessToken());
-        return SuccessApiResponse.of(accessToken);
+//    @PostMapping("/login/google")
+//    public SuccessApiResponse loginWithGoogle(@RequestBody GoogleLoginRequest accessToken){
+//        System.out.println(accessToken.getAccessToken());
+//        return SuccessApiResponse.of(accessToken);
+//    }
+    @GetMapping("/user/profile")
+    public SuccessApiResponse googleLogin(@AuthenticationPrincipal OAuth2User principal) {
+//        String email = principal.getAttribute("email");
+//        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, "");
+//        Authentication auth = authenticationManager.authenticate(authToken);
+//        Token token = tokenProvider.generateToken(auth);
+        return SuccessApiResponse.of(principal.getAttributes());
     }
 }
