@@ -1,8 +1,8 @@
 #http://localhost:8080/swagger-ui/index.html
 server:
   port: 8080
-  servlet:
-    context-path: /attendance-service
+#  servlet:
+#    context-path: /attendance-service
 spring:
   application:
     name: user-service
@@ -23,6 +23,17 @@ spring:
       ddl-auto: create-drop
       use-new-id-generator-mappings: true
     show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            scope:
+              - openid
+              - profile
+              - email
 jwt:
   granted: Bearer
   header: Authorization

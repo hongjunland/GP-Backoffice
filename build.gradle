@@ -47,12 +47,15 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
-	// mariadb
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+//	// mariadb
+//	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
 	// querydsl
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    // OAuth
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 }
 tasks.named('test') {
