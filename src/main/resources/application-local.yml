@@ -1,0 +1,36 @@
+#http://localhost:8080/swagger-ui/index.html
+server:
+  port: 8080
+  servlet:
+    context-path: /attendance-service
+spring:
+  application:
+    name: user-service
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      use-new-id-generator-mappings: true
+    show-sql: true
+jwt:
+  granted: Bearer
+  header: Authorization
+  secret: asdasd312321312321321e3lk12l3qs;djq2lk4jqwlkejklqw@@ewqke21;l#
+  expiration:
+    access: 3600000 # 3600 * 1000
+    refresh: 86400000 # 3600 * 24 * 1000
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

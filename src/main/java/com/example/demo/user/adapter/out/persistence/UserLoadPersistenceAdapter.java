@@ -2,17 +2,14 @@ package com.example.demo.user.adapter.out.persistence;
 
 import com.example.demo.common.annotaion.PersistenceAdapter;
 import com.example.demo.common.exception.UserNotFoundException;
-import com.example.demo.common.utils.Token;
 import com.example.demo.common.utils.TokenProvider;
 import com.example.demo.user.application.port.out.LoadUserPort;
-import com.example.demo.user.application.port.out.TokenGeneratorPort;
 import com.example.demo.user.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
-class UserLoadPersistenceAdapter implements LoadUserPort, TokenGeneratorPort {
+class UserLoadPersistenceAdapter implements LoadUserPort {
     private final SpringDataUserRepository userRepository;
     private final UserMapper userMapper;
     private final TokenProvider tokenProvider;
@@ -51,8 +48,5 @@ class UserLoadPersistenceAdapter implements LoadUserPort, TokenGeneratorPort {
         return userRepository.existsByNickname(nickname);
     }
 
-    @Override
-    public Token generateToken(Authentication auth) {
-        return tokenProvider.generateToken(auth);
-    }
+
 }
