@@ -1,11 +1,15 @@
 package com.example.demo.attendance.adapter.out.persistence;
 
+import com.example.demo.attendance.domain.AttendanceSearchPeriod;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
@@ -42,4 +46,20 @@ public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
     private void insertAttendance(AttendanceJpaEntity attendanceJpaEntity) {
         entityManager.persist(attendanceJpaEntity);
     }
+
+    @Override
+    public List<AttendanceJpaEntity> searchAttendanceByPeriod(AttendanceSearchPeriod attendanceSearchPeriod) {
+        return jpaQueryFactory
+                .select(qAttendanceJpaEntity)
+                .from(qAttendanceJpaEntity)
+                .where(
+                        betweenDate(attendanceSearchPeriod.getStartDate(), attendanceSearchPeriod.getEndDate())
+                )
+                .fetch();
+    }
+
+    private BooleanExpression betweenDate(LocalDate startDate, LocalDate endDate) {
+        return qAttendanceJpaEntity.workDate.between(startDate, endDate);
+    }
+
 }
