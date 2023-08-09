@@ -4,7 +4,7 @@ package com.example.demo.attendance.adapter.out.persistence;
 import com.example.demo.attendance.application.port.out.SaveAttendancePort;
 import com.example.demo.attendance.application.port.out.SearchAttendancePort;
 import com.example.demo.attendance.domain.Attendance;
-import com.example.demo.attendance.domain.AttendanceSearchPeriod;
+import com.example.demo.attendance.domain.AttendanceSearchCriteria;
 import com.example.demo.common.annotaion.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +24,7 @@ public class AttendancePersistenceAdapter
     }
 
     @Override
-    public List<Attendance> searchAttendanceByPeriod(AttendanceSearchPeriod attendanceSearchPeriod) {
-        return mapper.mapToDomainEntities(attendanceJpaRepo.searchAttendanceByPeriod(attendanceSearchPeriod));
+    public List<Attendance> searchAttendanceByCriteria(AttendanceSearchCriteria criteria) {
+        return mapper.mapToDomainEntities(attendanceJpaRepo.searchAttendanceByCriteria(criteria));
     }
 }

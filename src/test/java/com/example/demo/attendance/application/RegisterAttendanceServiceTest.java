@@ -1,6 +1,5 @@
 package com.example.demo.attendance.application;
 
-import com.example.demo.attendance.adapter.in.request.RegisterAttendanceRequest;
 import com.example.demo.attendance.application.port.in.command.RegisterAttendanceCommand;
 import com.example.demo.attendance.application.port.out.SaveAttendancePort;
 import com.example.demo.attendance.application.service.RegisterAttendanceService;

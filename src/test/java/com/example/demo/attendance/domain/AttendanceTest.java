@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // Mockist로 작성하려고 했는데 의부 의존성을 가지고 있지 않아 Classicist로 작성 하였습니다.
 @DisplayName("Attendance 단위 테스트")
-public class AttendanceTest {
+class AttendanceTest {
 
     private Attendance attendance;
 

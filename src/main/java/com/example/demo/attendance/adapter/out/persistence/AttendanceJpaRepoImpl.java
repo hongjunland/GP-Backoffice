@@ -1,6 +1,8 @@
 package com.example.demo.attendance.adapter.out.persistence;
 
-import com.example.demo.attendance.domain.AttendanceSearchPeriod;
+import com.example.demo.attendance.domain.AttendanceSearchCriteria;
+import com.example.demo.attendance.domain.constant.Department;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -48,18 +50,35 @@ public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
     }
 
     @Override
-    public List<AttendanceJpaEntity> searchAttendanceByPeriod(AttendanceSearchPeriod attendanceSearchPeriod) {
+    public List<AttendanceJpaEntity> searchAttendanceByCriteria(AttendanceSearchCriteria attendanceSearchCriteria) {
+        BooleanBuilder whereClause = new BooleanBuilder();
+        whereClause.and(betweenDate(attendanceSearchCriteria.getStartDate(), attendanceSearchCriteria.getEndDate()));
+
+        if (attendanceSearchCriteria.getName() != null) {
+            whereClause.and(nameEquals(attendanceSearchCriteria.getName()));
+        }
+
+        if (attendanceSearchCriteria.getDepartment() != null) {
+            whereClause.and(nameEquals(attendanceSearchCriteria.getDepartment()));
+        }
+
         return jpaQueryFactory
                 .select(qAttendanceJpaEntity)
                 .from(qAttendanceJpaEntity)
-                .where(
-                        betweenDate(attendanceSearchPeriod.getStartDate(), attendanceSearchPeriod.getEndDate())
-                )
+                .where(whereClause)
                 .fetch();
     }
 
     private BooleanExpression betweenDate(LocalDate startDate, LocalDate endDate) {
         return qAttendanceJpaEntity.workDate.between(startDate, endDate);
+    }
+
+    private BooleanExpression nameEquals(String name) {
+        return qAttendanceJpaEntity.name.eq(name);
+    }
+
+    private BooleanExpression nameEquals(Department department) {
+        return qAttendanceJpaEntity.department.eq(department);
     }
 
 }

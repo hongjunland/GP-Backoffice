@@ -5,7 +5,7 @@ import com.example.demo.attendance.adapter.out.persistence.AttendanceJpaRepo;
 import com.example.demo.attendance.adapter.out.persistence.AttendancePersistenceAdapter;
 import com.example.demo.attendance.adapter.out.persistence.AttendancePersistenceMapper;
 import com.example.demo.attendance.domain.Attendance;
-import com.example.demo.attendance.domain.AttendanceSearchPeriod;
+import com.example.demo.attendance.domain.AttendanceSearchCriteria;
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -40,7 +39,7 @@ public class AttendancePersistenceAdapterTest {
     private AttendancePersistenceAdapter adapter;
 
     private Attendance attendance;
-    private AttendanceSearchPeriod attendanceSearchPeriod;
+    private AttendanceSearchCriteria attendanceSearchCriteria;
     private AttendanceJpaEntity attendanceJpaEntity;
 
     @BeforeEach
@@ -57,9 +56,11 @@ public class AttendancePersistenceAdapterTest {
                 .build();
 
         // searchAttendanceByPeriod 메소드에 대한 request
-        attendanceSearchPeriod = AttendanceSearchPeriod.builder()
+        attendanceSearchCriteria = AttendanceSearchCriteria.builder()
                 .startDate(LocalDate.of(2022, 1, 1))
                 .endDate(LocalDate.of(2022, 1, 31))
+                .department(Department.DED)
+                .name("테스트")
                 .build();
 
         attendanceJpaEntity = AttendanceJpaEntity.builder()
@@ -92,16 +93,16 @@ public class AttendancePersistenceAdapterTest {
     @DisplayName("Attendance 기간별 검색 검증")
     public void SearchAttendanceByPeriodTest() {
         // given
-        when(attendanceJpaRepo.searchAttendanceByPeriod(attendanceSearchPeriod))
+        when(attendanceJpaRepo.searchAttendanceByCriteria(attendanceSearchCriteria))
                 .thenReturn(Collections.singletonList(attendanceJpaEntity));
         when(mapper.mapToDomainEntities(anyList())) // 해당 메소드를 검증하는게 아니므로 any()를 사용해줘도 무방함.
                 .thenReturn(Collections.singletonList(attendance));
 
         // when
-        List<Attendance> attendances = adapter.searchAttendanceByPeriod(attendanceSearchPeriod);
+        List<Attendance> attendances = adapter.searchAttendanceByCriteria(attendanceSearchCriteria);
 
         // then
-        verify(attendanceJpaRepo, times(1)).searchAttendanceByPeriod(attendanceSearchPeriod);
+        verify(attendanceJpaRepo, times(1)).searchAttendanceByCriteria(attendanceSearchCriteria);
         verify(mapper, times(1)).mapToDomainEntities(anyList());
 
         assertFalse(attendances.isEmpty());

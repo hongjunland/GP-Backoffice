@@ -6,9 +6,6 @@ import com.example.demo.attendance.application.port.in.command.RegisterAttendanc
 import com.example.demo.attendance.application.port.in.usecase.RegisterAttendanceUseCase;
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;
-import com.example.demo.common.SuccessApiResponse;
-import com.example.demo.user.application.port.in.command.CreateUserCommand;
-import com.example.demo.user.application.port.out.response.CreateUserResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

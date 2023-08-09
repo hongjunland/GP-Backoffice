@@ -2,7 +2,6 @@ package com.example.demo.attendance.adapter.in;
 
 import com.example.demo.attendance.adapter.in.request.SearchAttendanceRequest;
 import com.example.demo.attendance.adapter.in.web.SearchAttendanceController;
-import com.example.demo.attendance.application.port.in.query.SearchAttendanceCriteria;
 import com.example.demo.attendance.application.port.in.query.SearchAttendanceQuery;
 import com.example.demo.attendance.domain.Attendance;
 import com.example.demo.attendance.domain.constant.DayType;
@@ -43,7 +42,9 @@ public class SearchAttendanceControllerTest {
     public void setup() {
         request = new SearchAttendanceRequest(
                 LocalDate.now(),
-                LocalDate.now()
+                LocalDate.now(),
+                Department.DED,
+                "테스트"
         );
 
         for (int i = 0; i < 5; i++) {

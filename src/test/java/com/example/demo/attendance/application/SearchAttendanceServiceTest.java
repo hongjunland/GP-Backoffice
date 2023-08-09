@@ -1,10 +1,10 @@
 package com.example.demo.attendance.application;
 
-import com.example.demo.attendance.application.port.in.query.SearchAttendanceCriteria;
+import com.example.demo.attendance.application.port.in.query.SearchAttendanceQueryParameters;
 import com.example.demo.attendance.application.port.out.SearchAttendancePort;
 import com.example.demo.attendance.application.service.SearchAttendanceService;
 import com.example.demo.attendance.domain.Attendance;
-import com.example.demo.attendance.domain.AttendanceSearchPeriod;
+import com.example.demo.attendance.domain.AttendanceSearchCriteria;
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,14 +35,16 @@ class SearchAttendanceServiceTest {
     @InjectMocks
     private SearchAttendanceService searchAttendanceService;
 
-    private SearchAttendanceCriteria criteria;
+    private SearchAttendanceQueryParameters queryParameters;
     private Attendance mockAttendance;
 
     @BeforeEach
     void setUp() {
-        criteria = SearchAttendanceCriteria.builder()
+        queryParameters = SearchAttendanceQueryParameters.builder()
                 .startDate(LocalDate.now())
                 .endDate(LocalDate.now().plusDays(1))
+                .department(Department.DED)
+                .name("테스트")
                 .build();
 
         mockAttendance = Attendance.builder()
@@ -61,14 +63,14 @@ class SearchAttendanceServiceTest {
     @DisplayName("날짜 검색 행동 및 결과 값 테스트")
     void searchAttendanceTest() {
         // Given
-        when(searchAttendancePort.searchAttendanceByPeriod(any(AttendanceSearchPeriod.class)))
+        when(searchAttendancePort.searchAttendanceByCriteria(any(AttendanceSearchCriteria.class)))
                 .thenReturn(Collections.singletonList(mockAttendance));
 
         // When
-        List<Attendance> result = searchAttendanceService.searchAttendance(criteria);
+        List<Attendance> result = searchAttendanceService.searchAttendance(queryParameters);
 
         // Then
-        verify(searchAttendancePort, times(1)).searchAttendanceByPeriod(any(AttendanceSearchPeriod.class));
+        verify(searchAttendancePort, times(1)).searchAttendanceByCriteria(any(AttendanceSearchCriteria.class));
         assertFalse(result.isEmpty());
         assertEquals(mockAttendance, result.get(0));
 
