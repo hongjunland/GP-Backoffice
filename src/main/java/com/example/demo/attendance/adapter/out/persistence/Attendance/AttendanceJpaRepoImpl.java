@@ -1,9 +1,12 @@
 package com.example.demo.attendance.adapter.out.persistence.Attendance;
 
 import com.example.demo.attendance.domain.AttendanceSearchCriteria;
+import com.example.demo.attendance.domain.FixedStartTime;
+import com.example.demo.attendance.domain.constant.AttendanceStatus;
 import com.example.demo.attendance.domain.constant.Department;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +81,21 @@ public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
 
     private BooleanExpression departmentEquals(Department department) {
         return qAttendanceJpaEntity.department.eq(department);
+    }
+
+    public void updateAttendanceStatus(FixedStartTime fixedStartTime) {
+        // 지각 판단 조건
+        BooleanExpression isLate = qAttendanceJpaEntity.startTime.after(fixedStartTime.getFixedStartTime());
+
+        // 상태 업데이트 쿼리
+        jpaQueryFactory
+                .update(qAttendanceJpaEntity)
+                .set(qAttendanceJpaEntity.attendanceStatus,
+                        new CaseBuilder()
+                                .when(isLate).then(AttendanceStatus.LATE)
+                                .otherwise(AttendanceStatus.ON_TIME))
+                .where(qAttendanceJpaEntity.userId.eq(fixedStartTime.getUserId()))
+                .execute();
     }
 
 }

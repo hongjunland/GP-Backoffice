@@ -3,6 +3,7 @@ package com.example.demo.attendance.application.service;
 import com.example.demo.attendance.application.port.in.command.RegisterFixedStartTimeCommand;
 import com.example.demo.attendance.application.port.in.usecase.RegisterFixedStartTimeUseCase;
 import com.example.demo.attendance.application.port.out.SaveFixedStartTimePort;
+import com.example.demo.attendance.application.port.out.UpdateAttendanceStatusPort;
 import com.example.demo.attendance.domain.FixedStartTime;
 import com.example.demo.common.annotaion.UseCase;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +15,10 @@ import javax.transaction.Transactional;
 @UseCase
 @Transactional
 @RequiredArgsConstructor
-public class CheckLatenessService implements RegisterFixedStartTimeUseCase {
+public class RegisterFixedStartTimeService implements RegisterFixedStartTimeUseCase {
 
     private final SaveFixedStartTimePort saveFixedStartTimePort;
+    private final UpdateAttendanceStatusPort updateAttendanceStatusPort;
 
     @Override
     public void RegisterFixedStartTime(RegisterFixedStartTimeCommand command) {
@@ -26,6 +28,7 @@ public class CheckLatenessService implements RegisterFixedStartTimeUseCase {
                 .build();
 
         saveFixedStartTimePort.saveFixedStartTime(fixedStartTime);
+        updateAttendanceStatusPort.updateAttendanceStatus(fixedStartTime);
     }
 
 }
