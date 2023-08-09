@@ -15,6 +15,6 @@ public class FixedStartTimePersistenceAdapter
 
     @Override
     public void saveFixedStartTime(FixedStartTime fixedStartTime) {
-        fixedStartTimeJpaRepo.save(fixedStartTime.toJpaEntity());
+        fixedStartTimeJpaRepo.save(mapper.mapToJpaEntity(fixedStartTime));
     }
 }
