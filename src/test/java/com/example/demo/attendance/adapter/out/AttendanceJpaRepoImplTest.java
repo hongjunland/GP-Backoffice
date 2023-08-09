@@ -3,7 +3,7 @@ package com.example.demo.attendance.adapter.out;
 import com.example.demo.attendance.adapter.out.persistence.AttendanceJpaEntity;
 import com.example.demo.attendance.adapter.out.persistence.AttendanceJpaRepoImpl;
 import com.example.demo.attendance.adapter.out.persistence.QAttendanceJpaEntity;
-import com.example.demo.attendance.domain.AttendanceSearchPeriod;
+import com.example.demo.attendance.domain.AttendanceSearchCriteria;
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;
 import com.querydsl.core.types.EntityPath;
@@ -56,9 +56,11 @@ class AttendanceJpaRepoImplTest {
     @DisplayName("AttendanceSearchPeriod이 있을 경우 검색 검증")
     void SearchAttendanceByPeriodTest() {
         // given
-        AttendanceSearchPeriod searchPeriod = AttendanceSearchPeriod.builder()
+        AttendanceSearchCriteria searchPeriod = AttendanceSearchCriteria.builder()
                 .startDate(LocalDate.now().minusDays(5))
                 .endDate(LocalDate.now().plusDays(5))
+                .department(Department.DED)
+                .name("테스트")
                 .build();
 
         JPAQuery<AttendanceJpaEntity> jpaQuery = mock(JPAQuery.class);
@@ -68,7 +70,7 @@ class AttendanceJpaRepoImplTest {
         when(jpaQuery.fetch()).thenReturn(Collections.singletonList(attendanceJpaEntity));
 
         // when
-        List<AttendanceJpaEntity> result = attendanceJpaRepo.searchAttendanceByPeriod(searchPeriod);
+        List<AttendanceJpaEntity> result = attendanceJpaRepo.searchAttendanceByCriteria(searchPeriod);
 
         // then
         verify(jpaQueryFactory, times(1)).select((Expression<Object>) any());

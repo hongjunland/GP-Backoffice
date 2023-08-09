@@ -1,10 +1,10 @@
 package com.example.demo.attendance.application.service;
 
 import com.example.demo.attendance.application.port.in.query.SearchAttendanceQuery;
-import com.example.demo.attendance.application.port.in.query.SearchAttendanceCriteria;
+import com.example.demo.attendance.application.port.in.query.SearchAttendanceQueryParameters;
 import com.example.demo.attendance.application.port.out.SearchAttendancePort;
 import com.example.demo.attendance.domain.Attendance;
-import com.example.demo.attendance.domain.AttendanceSearchPeriod;
+import com.example.demo.attendance.domain.AttendanceSearchCriteria;
 import com.example.demo.common.annotaion.UseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +21,14 @@ public class SearchAttendanceService implements SearchAttendanceQuery {
     private final SearchAttendancePort searchAttendancePort;
 
     @Override
-    public List<Attendance> searchAttendance(SearchAttendanceCriteria criteria) {
-        AttendanceSearchPeriod attendanceSearchPeriod = AttendanceSearchPeriod.builder()
-                .startDate(criteria.getStartDate())
-                .endDate(criteria.getEndDate())
+    public List<Attendance> searchAttendance(SearchAttendanceQueryParameters parameters) {
+        AttendanceSearchCriteria criteria = AttendanceSearchCriteria.builder()
+                .startDate(parameters.getStartDate())
+                .endDate(parameters.getEndDate())
+                .department(parameters.getDepartment())
+                .name(parameters.getName())
                 .build();
 
-        return searchAttendancePort.searchAttendanceByPeriod(attendanceSearchPeriod);
+        return searchAttendancePort.searchAttendanceByCriteria(criteria);
     }
 }

@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface SearchAttendanceQuery {
 
-    List<Attendance> searchAttendance(SearchAttendanceCriteria criteria);
+    List<Attendance> searchAttendance(SearchAttendanceQueryParameters parameters);
 
 }
