@@ -1,4 +1,4 @@
-package com.example.demo.attendance.adapter.out.persistence;
+package com.example.demo.attendance.adapter.out.persistence.Attendance;
 
 import com.example.demo.attendance.domain.Attendance;
 import org.springframework.stereotype.Component;

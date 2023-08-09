@@ -1,4 +1,4 @@
-package com.example.demo.attendance.adapter.out.persistence;
+package com.example.demo.attendance.adapter.out.persistence.Attendance;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

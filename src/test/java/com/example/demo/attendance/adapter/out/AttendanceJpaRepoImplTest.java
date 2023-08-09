@@ -1,7 +1,7 @@
 package com.example.demo.attendance.adapter.out;
 
-import com.example.demo.attendance.adapter.out.persistence.AttendanceJpaEntity;
-import com.example.demo.attendance.adapter.out.persistence.AttendanceJpaRepoImpl;
+import com.example.demo.attendance.adapter.out.persistence.Attendance.AttendanceJpaEntity;
+import com.example.demo.attendance.adapter.out.persistence.Attendance.AttendanceJpaRepoImpl;
 import com.example.demo.attendance.adapter.out.persistence.QAttendanceJpaEntity;
 import com.example.demo.attendance.domain.AttendanceSearchCriteria;
 import com.example.demo.attendance.domain.constant.DayType;

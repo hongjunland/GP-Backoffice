@@ -1,6 +1,6 @@
 package com.example.demo.attendance.domain;
 
-import com.example.demo.attendance.adapter.out.persistence.AttendanceJpaEntity;
+import com.example.demo.attendance.adapter.out.persistence.Attendance.AttendanceJpaEntity;
 import com.example.demo.attendance.domain.constant.Department;
 import com.example.demo.attendance.domain.constant.DayType;
 import lombok.*;
