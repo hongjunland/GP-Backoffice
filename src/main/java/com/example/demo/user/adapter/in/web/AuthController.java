@@ -30,17 +30,12 @@ class AuthController {
                 .build();
         return SuccessApiResponse.of(loginUseCase.login(loginCommand));
     }
-//    @PostMapping("/login/google")
-//    public SuccessApiResponse loginWithGoogle(@RequestBody GoogleLoginRequest accessToken){
-//        System.out.println(accessToken.getAccessToken());
-//        return SuccessApiResponse.of(accessToken);
+//    @GetMapping("/user/profile")
+//    public SuccessApiResponse googleLogin(@AuthenticationPrincipal OAuth2User principal) {
+////        String email = principal.getAttribute("email");
+////        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, "");
+////        Authentication auth = authenticationManager.authenticate(authToken);
+////        Token token = tokenProvider.generateToken(auth);
+//        return SuccessApiResponse.of(principal.getAttributes());
 //    }
-    @GetMapping("/user/profile")
-    public SuccessApiResponse googleLogin(@AuthenticationPrincipal OAuth2User principal) {
-//        String email = principal.getAttribute("email");
-//        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, "");
-//        Authentication auth = authenticationManager.authenticate(authToken);
-//        Token token = tokenProvider.generateToken(auth);
-        return SuccessApiResponse.of(principal.getAttributes());
-    }
 }

@@ -1,21 +1,22 @@
 package com.example.demo.user.adapter.in.web.request;
 
 import com.example.demo.common.SelfValidating;
-import lombok.Getter;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateUserRequest extends SelfValidating<CreateUserRequest> {
     @Email
-    private final String email;
+    private String email;
     @NotBlank
-    private final String password;
+    private String password;
     @NotBlank
-    private final String nickname;
+    private String nickname;
     @NotBlank
-    private final String name;
+    private String name;
 
     public CreateUserRequest(String email, String password, String nickname, String name) {
         this.email = email;

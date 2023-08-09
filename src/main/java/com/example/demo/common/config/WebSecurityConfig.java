@@ -3,6 +3,7 @@ package com.example.demo.common.config;
 import com.example.demo.common.utils.TokenAuthenticationFilter;
 import com.example.demo.common.utils.TokenProvider;
 import com.example.demo.user.adapter.out.persistence.CustomOauth2UserService;
+import com.example.demo.user.adapter.out.persistence.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.example.demo.user.adapter.out.persistence.OAuth2AuthenticationFailureHandler;
 import com.example.demo.user.adapter.out.persistence.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class WebSecurityConfig {
     private final OAuth2AuthenticationSuccessHandler oauth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oauth2AuthenticationFailureHandler;
     private final CustomOauth2UserService oath2UserService;
+    private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -55,23 +57,20 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login()
-//                .authorizationEndpoint()
-//                .baseUri("/oauth2/authorize")
-//                .authorizationRequestRepository(cookieAuthorizationRequestRepository())
-//                .and()
-//                .redirectionEndpoint()
-//                .baseUri("/oauth2/callback/*")
-//                .and()
+                .authorizationEndpoint()
+                .baseUri("/oauth2/authorize")
+                .authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository)
+                .and()
+                .redirectionEndpoint()
+                .baseUri("/oauth2/callback/*")
+                .and()
                 .userInfoEndpoint()
                 .userService(oath2UserService)
                 .and()
                 .successHandler(oauth2AuthenticationSuccessHandler)
-                .failureHandler(oauth2AuthenticationFailureHandler)
-                ;
-//                .and()
-//                .successHandler(oauth2AuthenticationSuccessHandler)
-//                .failureHandler(oauth2AuthenticationFailureHandler);
-//                .addFilterBefore(new TokenAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .failureHandler(oauth2AuthenticationFailureHandler);
+
+                http.addFilterBefore(new TokenAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -104,7 +103,7 @@ public class WebSecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        config.setAllowedOrigins(List.of("http://localhost:3000", "https://accounts.google.com"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("*"));
