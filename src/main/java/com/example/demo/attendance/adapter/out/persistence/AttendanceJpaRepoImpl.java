@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
@@ -54,13 +55,11 @@ public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
         BooleanBuilder whereClause = new BooleanBuilder();
         whereClause.and(betweenDate(attendanceSearchCriteria.getStartDate(), attendanceSearchCriteria.getEndDate()));
 
-        if (attendanceSearchCriteria.getName() != null) {
-            whereClause.and(nameEquals(attendanceSearchCriteria.getName()));
-        }
+        Optional.ofNullable(attendanceSearchCriteria.getName())
+                .ifPresent(name -> whereClause.and(nameEquals(name)));
 
-        if (attendanceSearchCriteria.getDepartment() != null) {
-            whereClause.and(nameEquals(attendanceSearchCriteria.getDepartment()));
-        }
+        Optional.ofNullable(attendanceSearchCriteria.getDepartment())
+                .ifPresent(department -> whereClause.and(departmentEquals(department)));
 
         return jpaQueryFactory
                 .select(qAttendanceJpaEntity)
@@ -77,7 +76,7 @@ public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
         return qAttendanceJpaEntity.name.eq(name);
     }
 
-    private BooleanExpression nameEquals(Department department) {
+    private BooleanExpression departmentEquals(Department department) {
         return qAttendanceJpaEntity.department.eq(department);
     }
 
