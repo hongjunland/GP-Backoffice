@@ -41,6 +41,7 @@ public class Attendance {
                 .dayType(dayType)
                 .startTime(startTime)
                 .endTime(endTime)
+                .attendanceStatus(attendanceStatus)
                 .build();
     }
 

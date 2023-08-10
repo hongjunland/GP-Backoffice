@@ -19,6 +19,7 @@ import java.util.List;
 public class SearchAttendanceController {
 
     private final SearchAttendanceQuery searchAttendanceQuery;
+    private final AttendanceResponseMapper attendanceResponseMapper;
 
     @GetMapping("/search")
     public SuccessApiResponse searchAttendance(
@@ -33,7 +34,7 @@ public class SearchAttendanceController {
 
         List<Attendance> attendances = searchAttendanceQuery.searchAttendance(parameters);
 
-        return SuccessApiResponse.of(AttendanceResponseMapper.mapToSearchAttendanceResponses(attendances));
+        return SuccessApiResponse.of(attendanceResponseMapper.mapToSearchAttendanceResponses(attendances));
     }
 
 }
