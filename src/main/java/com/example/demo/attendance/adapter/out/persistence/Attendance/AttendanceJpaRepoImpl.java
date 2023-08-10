@@ -2,11 +2,10 @@ package com.example.demo.attendance.adapter.out.persistence.Attendance;
 
 import com.example.demo.attendance.domain.AttendanceSearchCriteria;
 import com.example.demo.attendance.domain.FixedStartTime;
-import com.example.demo.attendance.domain.constant.AttendanceStatus;
 import com.example.demo.attendance.domain.constant.Department;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,9 +90,9 @@ public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
         jpaQueryFactory
                 .update(qAttendanceJpaEntity)
                 .set(qAttendanceJpaEntity.attendanceStatus,
-                        new CaseBuilder()
-                                .when(isLate).then(AttendanceStatus.LATE)
-                                .otherwise(AttendanceStatus.ON_TIME))
+                        Expressions.cases()
+                                .when(isLate).then("지각") // .name()으로 문자열로 변환
+                                .otherwise("정시 출근")) // .name()으로 문자열로 변환
                 .where(qAttendanceJpaEntity.userId.eq(fixedStartTime.getUserId()))
                 .execute();
     }

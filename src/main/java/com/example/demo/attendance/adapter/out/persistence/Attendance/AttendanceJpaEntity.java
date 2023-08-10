@@ -1,6 +1,5 @@
 package com.example.demo.attendance.adapter.out.persistence.Attendance;
 
-import com.example.demo.attendance.domain.constant.AttendanceStatus;
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;
 import lombok.AllArgsConstructor;
@@ -52,8 +51,7 @@ public class AttendanceJpaEntity {
     @Column(name = "end_time")
     private LocalTime endTime;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "attendance_status")
-    private AttendanceStatus attendanceStatus;
+    private String attendanceStatus;
 
 }

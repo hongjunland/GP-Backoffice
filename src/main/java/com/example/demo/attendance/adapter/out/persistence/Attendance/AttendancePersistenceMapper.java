@@ -20,6 +20,7 @@ public class AttendancePersistenceMapper {
                 .dayType(attendanceJpaEntity.getDayType())
                 .startTime(attendanceJpaEntity.getStartTime())
                 .endTime(attendanceJpaEntity.getEndTime())
+                .attendanceStatus(attendanceJpaEntity.getAttendanceStatus())
                 .build();
     }
 

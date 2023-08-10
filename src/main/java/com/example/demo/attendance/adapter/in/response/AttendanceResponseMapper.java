@@ -19,6 +19,7 @@ public class AttendanceResponseMapper {
                     .dayType(attendance.getDayType())
                     .startTime(attendance.getStartTime())
                     .endTime(attendance.getEndTime())
+                    .attendanceStatus(attendance.getAttendanceStatus())
                     .build();
 
             searchAttendanceResponses.add(response);
