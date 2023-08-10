@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class SearchAttendanceRequest extends SelfValidating<SearchAttendanceRequest> {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

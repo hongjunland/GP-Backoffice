@@ -4,6 +4,7 @@ import com.example.demo.attendance.adapter.out.persistence.Attendance.Attendance
 import com.example.demo.attendance.adapter.out.persistence.Attendance.AttendanceJpaRepo;
 import com.example.demo.attendance.adapter.out.persistence.Attendance.AttendanceJpaRepoImpl;
 import com.example.demo.attendance.domain.AttendanceSearchCriteria;
+import com.example.demo.attendance.domain.FixedStartTime;
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -19,6 +20,10 @@ import java.time.LocalTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @DisplayName("AttendanceJpaRepoImpl 통합 테스트")
@@ -128,4 +133,37 @@ public class AttendanceJpaRepoImplIT {
         // then
         assertTrue(result.isEmpty());
     }
+
+    @Test
+    @Transactional
+    @DisplayName("출근 시간을 기준으로 지각 상태 업데이트 테스트")
+    public void updateAttendanceStatusTest_Late() {
+        // given
+        LocalTime startTime = LocalTime.of(10, 0); // 지각한 시간으로 가정
+        AttendanceJpaEntity attendanceJpaEntity = AttendanceJpaEntity.builder()
+                .userId(1L)
+                .department(Department.DED)
+                .name("Test User")
+                .workDate(LocalDate.now())
+                .dayType(DayType.WEEKDAY)
+                .startTime(startTime)
+                .endTime(LocalTime.now().plusHours(8))
+                .build();
+
+        attendanceJpaRepo.save(attendanceJpaEntity);
+
+        FixedStartTime fixedStartTime = FixedStartTime.builder()
+                .fixedStartTime(LocalTime.of(9, 0))
+                .userId(1L)
+                .build();
+
+        // when
+        attendanceJpaRepo.updateAttendanceStatus(fixedStartTime);
+
+        // then
+        AttendanceJpaEntity updatedEntity = attendanceJpaRepo.findById(attendanceJpaEntity.getId()).orElse(null);
+        assertNotNull(updatedEntity);
+        assertEquals("지각", updatedEntity.getAttendanceStatus());
+    }
+
 }

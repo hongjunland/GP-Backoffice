@@ -7,7 +7,7 @@ import lombok.*;
 import java.time.LocalTime;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class RegisterFixedStartTimeRequest extends SelfValidating<RegisterFixedStartTimeRequest> {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm", timezone = "Asia/Seoul")

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class RegisterAttendanceRequest extends SelfValidating<RegisterAttendanceRequest> {
 
     // DTO는 일방적으로 불변해야하므로 final을 붙여줬습니다.

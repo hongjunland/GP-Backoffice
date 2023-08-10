@@ -20,7 +20,7 @@ public class RegisterFixedStartTimeController {
     private final RegisterFixedStartTimeUseCase registerFixedStartTimeUseCase;
 
     @PostMapping
-    public SuccessApiResponse<String> RegisterFixedStartTime(
+    public SuccessApiResponse<String> registerFixedStartTime(
             @RequestBody RegisterFixedStartTimeRequest request
     ) {
         RegisterFixedStartTimeCommand command = RegisterFixedStartTimeCommand.builder()
@@ -30,7 +30,7 @@ public class RegisterFixedStartTimeController {
 
         registerFixedStartTimeUseCase.RegisterFixedStartTime(command);
 
-        return SuccessApiResponse.of(new String("성공"));
+        return SuccessApiResponse.of();
     }
 
 }

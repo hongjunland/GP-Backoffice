@@ -91,8 +91,8 @@ public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
                 .update(qAttendanceJpaEntity)
                 .set(qAttendanceJpaEntity.attendanceStatus,
                         Expressions.cases()
-                                .when(isLate).then("지각") // .name()으로 문자열로 변환
-                                .otherwise("정시 출근")) // .name()으로 문자열로 변환
+                                .when(isLate).then("지각")
+                                .otherwise("정시 출근"))
                 .where(qAttendanceJpaEntity.userId.eq(fixedStartTime.getUserId()))
                 .execute();
     }
