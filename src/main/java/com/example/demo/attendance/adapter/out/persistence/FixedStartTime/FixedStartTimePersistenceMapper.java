@@ -10,10 +10,12 @@ public class FixedStartTimePersistenceMapper {
 
     public FixedStartTime mapToDomainEntity(FixedStartTimeJpaEntity fixedStartTimeJpaEntity) {
         return Optional.ofNullable(fixedStartTimeJpaEntity)
-                .map(entity -> FixedStartTime.builder()
-                        .fixedStartTime(entity.getFixedStartTime())
-                        .userId(entity.getUserId())
-                        .build())
+                .map(jpaEntity -> FixedStartTime.builder()
+                        .fixedStartTimeId(jpaEntity.getId())
+                        .fixedStartTime(jpaEntity.getFixedStartTime())
+                        .userId(jpaEntity.getUserId())
+                        .build()
+                )
                 .orElse(null);
     }
 

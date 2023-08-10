@@ -22,6 +22,7 @@ public class Attendance {
     private LocalTime startTime;
     private LocalTime endTime;
     private String attendanceStatus;
+    private LocalTime fixedStartTime;
 
     /*
     식별자 사용해서 해당 Domain Entity를 고유하게 식별해주기 위함입니다.
@@ -42,6 +43,7 @@ public class Attendance {
                 .startTime(startTime)
                 .endTime(endTime)
                 .attendanceStatus(attendanceStatus)
+                .fixedStartTime(fixedStartTime)
                 .build();
     }
 
