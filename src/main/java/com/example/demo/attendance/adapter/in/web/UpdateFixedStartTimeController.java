@@ -1,8 +1,9 @@
 package com.example.demo.attendance.adapter.in.web;
 
 import com.example.demo.attendance.adapter.in.request.RegisterFixedStartTimeRequest;
-import com.example.demo.attendance.application.port.in.command.RegisterFixedStartTimeCommand;
-import com.example.demo.attendance.application.port.in.usecase.RegisterFixedStartTimeUseCase;
+import com.example.demo.attendance.adapter.in.request.UpdateFixedStartTimeRequest;
+import com.example.demo.attendance.application.port.in.command.UpdateFixedStartTimeCommand;
+import com.example.demo.attendance.application.port.in.usecase.UpdateFixedStartTimeUseCase;
 import com.example.demo.common.SuccessApiResponse;
 import com.example.demo.common.annotaion.WebAdapter;
 import lombok.RequiredArgsConstructor;
@@ -15,22 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/fixed-start-time")
-public class RegisterFixedStartTimeController {
+public class UpdateFixedStartTimeController {
 
-    private final RegisterFixedStartTimeUseCase registerFixedStartTimeUseCase;
+    private final UpdateFixedStartTimeUseCase updateFixedStartTimeUseCase;
 
-    @PostMapping
-    public SuccessApiResponse<String> registerFixedStartTime(
-            @RequestBody RegisterFixedStartTimeRequest request
+    @PostMapping("/update")
+    public SuccessApiResponse<String> updateFixedStartTime(
+            @RequestBody UpdateFixedStartTimeRequest request
     ) {
-        RegisterFixedStartTimeCommand command = RegisterFixedStartTimeCommand.builder()
+        UpdateFixedStartTimeCommand command = UpdateFixedStartTimeCommand.builder()
                 .fixedStartTime(request.getFixedStartTime())
+                .updateDate(request.getUpdateDate())
                 .userId(request.getUserId())
                 .build();
 
-        registerFixedStartTimeUseCase.RegisterFixedStartTime(command);
+        updateFixedStartTimeUseCase.UpdateFixedStartTime(command);
 
         return SuccessApiResponse.of();
+
     }
 
 }
