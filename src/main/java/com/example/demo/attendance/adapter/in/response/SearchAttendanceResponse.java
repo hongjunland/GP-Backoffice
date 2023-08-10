@@ -20,5 +20,6 @@ public class SearchAttendanceResponse {
     private DayType dayType;
     private LocalTime startTime;
     private LocalTime endTime;
+    private String attendanceStatus;
 
 }

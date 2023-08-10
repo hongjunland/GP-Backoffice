@@ -1,6 +1,6 @@
 package com.example.demo.attendance.domain;
 
-import com.example.demo.attendance.adapter.out.persistence.AttendanceJpaEntity;
+import com.example.demo.attendance.adapter.out.persistence.Attendance.AttendanceJpaEntity;
 import com.example.demo.attendance.domain.constant.Department;
 import com.example.demo.attendance.domain.constant.DayType;
 import lombok.*;
@@ -21,6 +21,7 @@ public class Attendance {
     private DayType dayType;
     private LocalTime startTime;
     private LocalTime endTime;
+    private String attendanceStatus;
 
     /*
     식별자 사용해서 해당 Domain Entity를 고유하게 식별해주기 위함입니다.
@@ -40,6 +41,7 @@ public class Attendance {
                 .dayType(dayType)
                 .startTime(startTime)
                 .endTime(endTime)
+                .attendanceStatus(attendanceStatus)
                 .build();
     }
 

@@ -1,9 +1,10 @@
 package com.example.demo.attendance.adapter.out;
 
-import com.example.demo.attendance.adapter.out.persistence.AttendanceJpaEntity;
-import com.example.demo.attendance.adapter.out.persistence.AttendanceJpaRepoImpl;
-import com.example.demo.attendance.adapter.out.persistence.QAttendanceJpaEntity;
+import com.example.demo.attendance.adapter.out.persistence.Attendance.AttendanceJpaEntity;
+import com.example.demo.attendance.adapter.out.persistence.Attendance.AttendanceJpaRepoImpl;
+import com.example.demo.attendance.adapter.out.persistence.Attendance.QAttendanceJpaEntity;
 import com.example.demo.attendance.domain.AttendanceSearchCriteria;
+import com.example.demo.attendance.domain.FixedStartTime;
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;
 import com.querydsl.core.types.EntityPath;
@@ -11,6 +12,7 @@ import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.querydsl.jpa.impl.JPAUpdateClause;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +38,9 @@ class AttendanceJpaRepoImplTest {
     @Mock
     private JPAQueryFactory jpaQueryFactory;
 
+    @Mock
+    private JPAUpdateClause jpaUpdateClause;
+
     private AttendanceJpaEntity attendanceJpaEntity;
     private QAttendanceJpaEntity qAttendanceJpaEntity = QAttendanceJpaEntity.attendanceJpaEntity;
 
@@ -54,9 +59,9 @@ class AttendanceJpaRepoImplTest {
 
     @Test
     @DisplayName("AttendanceSearchPeriod이 있을 경우 검색 검증")
-    void SearchAttendanceByPeriodTest() {
+    void SearchAttendanceByCriteriaTest() {
         // given
-        AttendanceSearchCriteria searchPeriod = AttendanceSearchCriteria.builder()
+        AttendanceSearchCriteria criteria = AttendanceSearchCriteria.builder()
                 .startDate(LocalDate.now().minusDays(5))
                 .endDate(LocalDate.now().plusDays(5))
                 .department(Department.DED)
@@ -70,7 +75,7 @@ class AttendanceJpaRepoImplTest {
         when(jpaQuery.fetch()).thenReturn(Collections.singletonList(attendanceJpaEntity));
 
         // when
-        List<AttendanceJpaEntity> result = attendanceJpaRepo.searchAttendanceByCriteria(searchPeriod);
+        List<AttendanceJpaEntity> result = attendanceJpaRepo.searchAttendanceByCriteria(criteria);
 
         // then
         verify(jpaQueryFactory, times(1)).select((Expression<Object>) any());
@@ -80,4 +85,5 @@ class AttendanceJpaRepoImplTest {
         assertEquals(1, result.size());
         assertEquals(attendanceJpaEntity, result.get(0));
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.demo.attendance.adapter.out.persistence;
+package com.example.demo.attendance.adapter.out.persistence.Attendance;
 
 import com.example.demo.attendance.domain.Attendance;
 import org.springframework.stereotype.Component;
@@ -20,6 +20,7 @@ public class AttendancePersistenceMapper {
                 .dayType(attendanceJpaEntity.getDayType())
                 .startTime(attendanceJpaEntity.getStartTime())
                 .endTime(attendanceJpaEntity.getEndTime())
+                .attendanceStatus(attendanceJpaEntity.getAttendanceStatus())
                 .build();
     }
 

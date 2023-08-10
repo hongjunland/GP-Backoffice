@@ -37,6 +37,6 @@ public class RegisterAttendanceController {
             registerAttendanceUseCase.registerAttendance(command);
         }
 
-        return SuccessApiResponse.of(new String("성공"));
+        return SuccessApiResponse.of();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.demo.attendance.adapter.out.persistence;
+package com.example.demo.attendance.adapter.out.persistence.Attendance;
 
 import com.example.demo.attendance.domain.constant.DayType;
 import com.example.demo.attendance.domain.constant.Department;
@@ -50,5 +50,8 @@ public class AttendanceJpaEntity {
 
     @Column(name = "end_time")
     private LocalTime endTime;
+
+    @Column(name = "attendance_status")
+    private String attendanceStatus;
 
 }
