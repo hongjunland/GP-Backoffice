@@ -2,7 +2,8 @@ package com.example.demo.common.config;
 
 import com.example.demo.common.utils.TokenAuthenticationFilter;
 import com.example.demo.common.utils.TokenProvider;
-import com.example.demo.user.adapter.out.persistence.CustomOauth2UserService;
+//import com.example.demo.user.adapter.out.persistence.CustomOauth2UserService;
+import com.example.demo.user.adapter.out.persistence.CustomDefaultOAuth2UserService;
 import com.example.demo.user.adapter.out.persistence.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.example.demo.user.adapter.out.persistence.OAuth2AuthenticationFailureHandler;
 import com.example.demo.user.adapter.out.persistence.OAuth2AuthenticationSuccessHandler;
@@ -15,10 +16,13 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestCustomizers;
 import org.springframework.security.oauth2.client.web.server.DefaultServerOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizationRequestResolver;
@@ -33,39 +37,43 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableWebSecurity
 public class WebSecurityConfig {
     private final TokenProvider tokenProvider;
     private final OAuth2AuthenticationSuccessHandler oauth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oauth2AuthenticationFailureHandler;
-    private final CustomOauth2UserService oath2UserService;
+    private final OAuth2UserService customDefaultOAuth2UserService;
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors()
+                .configurationSource(corsConfigurationSource())
                 .and()
                 .csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+
                 .formLogin().disable()
                 .httpBasic().disable()
                 .authorizeHttpRequests((auth) -> auth
                         .antMatchers(HttpMethod.POST, "/api/v1/auth/login", "/api/v1/users", "/api/v1/auth/login/**", "/oauth2/**").permitAll()
-                        .antMatchers("/").permitAll()
+                        .antMatchers("**/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login()
+                .userInfoEndpoint()
+//                .oidcUserService(customDefaultOAuth2UserService)
+                .userService(customDefaultOAuth2UserService)
+                .and()
                 .authorizationEndpoint()
                 .baseUri("/oauth2/authorize")
                 .authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository)
                 .and()
                 .redirectionEndpoint()
                 .baseUri("/oauth2/callback/*")
-                .and()
-                .userInfoEndpoint()
-                .userService(oath2UserService)
                 .and()
                 .successHandler(oauth2AuthenticationSuccessHandler)
                 .failureHandler(oauth2AuthenticationFailureHandler);
@@ -74,7 +82,6 @@ public class WebSecurityConfig {
 
         return http.build();
     }
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (webSecurity) -> webSecurity.ignoring()
@@ -103,7 +110,7 @@ public class WebSecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:3000", "https://accounts.google.com"));
+        config.setAllowedOrigins(List.of("http://localhost:3000", "**/**"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("*"));
@@ -112,9 +119,4 @@ public class WebSecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
-
-//    @Bean
-//    public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
-//        return new HttpCookieOAuth2AuthorizationRequestRepository();
-//    }
 }
