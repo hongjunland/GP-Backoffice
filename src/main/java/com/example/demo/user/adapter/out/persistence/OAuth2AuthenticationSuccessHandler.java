@@ -29,41 +29,34 @@ import static com.example.demo.user.adapter.out.persistence.HttpCookieOAuth2Auth
 @Slf4j
 @Component
 @RequiredArgsConstructor
-//public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final TokenProvider tokenProvider;
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
-    private final SpringDataUserRepository userRepository;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//        String targetUrl = determineTargetUrl(request, response, authentication);
-        System.out.println("onAuthenticationSuccess");
-//        if (response.isCommitted()) {
-//            log.debug("Response has already been committed. Unable to redirect to " + targetUrl);
-//            return;
-//        }
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        String jsonResponse = "{\"message\":\"Authentication successful\"}";
-//        clearAuthenticationAttributes(request, response);
-        response.getWriter().write(jsonResponse);
-//        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+        String targetUrl = determineTargetUrl(request, response, authentication);
+        if (response.isCommitted()) {
+            log.debug("Response has already been committed. Unable to redirect to " + targetUrl);
+            return;
+        }
+        clearAuthenticationAttributes(request, response);
+        getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 
-//    protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-//        System.out.println("determineTargetUrl");
-//        Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
-//                .map(Cookie::getValue);
-//        String targetUrl = redirectUri.orElse(redirectStrategy);
-//        System.out.println(authentication.getAuthorities());
-//        Token token = tokenProvider.generateToken(authentication);
-//        return UriComponentsBuilder.fromUriString(targetUrl)
-//                .queryParam("token", token.getAccessToken())
-//                .build().toUriString();
-//    }
+    protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
+                .map(Cookie::getValue);
+        String targetUrl = redirectUri.orElse(redirectUri.get());
+        Token token = tokenProvider.generateToken(authentication);
+        return UriComponentsBuilder.fromUriString(targetUrl)
+                .queryParam("accessToken", token.getAccessToken())
+                .queryParam("refreshToken", token.getRefreshToken())
+                .queryParam("expiration", token.getExpiration().toString())
+                .build().toUriString();
+    }
 
-//    protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
-//        super.clearAuthenticationAttributes(request);
-//        httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
-//    }
+    protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
+        super.clearAuthenticationAttributes(request);
+        httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
+    }
 }

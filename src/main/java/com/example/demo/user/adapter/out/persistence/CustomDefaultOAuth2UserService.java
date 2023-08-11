@@ -25,33 +25,27 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService {
     private final SpringDataUserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
-        System.out.println("CustomDefaultOAuth2UserService -> loadUser");
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
-        Map<String, Object> attributes = oAuth2User.getAttributes();
-        String email = (String) attributes.get("email");
+        GoogleUserInfo userInfo = GoogleUserInfo.of(oAuth2User.getAttributes());
+        String email = userInfo.getEmail();
         Optional<UserJpaEntity> userJpaEntity = userRepository.findByEmail(email);
-        Long userId;
-        if(userJpaEntity.isEmpty()){
-            UserJpaEntity newUserJpaEntity = UserJpaEntity.builder()
-                    .email((String) attributes.get("email"))
-                    .password("zxczxczxcxz")
-                    .nickname((String) attributes.get("name"))
-                    .name((String) attributes.get("given_name"))
-                    .build();
-            userId = userRepository.save(newUserJpaEntity).getId();
-        }
-        else{
-            userId = userJpaEntity.get().getId();
-        }
+        Long userId = userJpaEntity.map(UserJpaEntity::getId)
+                .orElseGet(() -> userRepository.save(mapToJpaEntity(userInfo)).getId());
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
         authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
         return UserDetailsImpl.builder()
                 .username(userId.toString())
-                .attributes(attributes)
+                .attributes(oAuth2User.getAttributes())
                 .authorities(authorityList)
+                .build();
+    }
+    private UserJpaEntity mapToJpaEntity(GoogleUserInfo userInfo){
+        return UserJpaEntity.builder()
+                .email(userInfo.getEmail())
+                .nickname(userInfo.getFamily_name()+userInfo.getName())
+                .name(userInfo.getName())
                 .build();
     }
 }

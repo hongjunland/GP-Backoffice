@@ -19,18 +19,9 @@ import static com.example.demo.user.adapter.out.persistence.HttpCookieOAuth2Auth
 @RequiredArgsConstructor
 public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
-    //    @Override
-//    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-//        // 로그에 오류 기록
-//        logger.error("OAuth2 authentication failed", exception);
-//
-//        // 클라이언트에 오류 메시지 반환
-//        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//        response.getWriter().write("OAuth2 authentication failed");
-//    }
+
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        System.out.println("onAuthenticationFailure");
         String targetUrl = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue)
                 .orElse(("/"));

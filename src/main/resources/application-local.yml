@@ -28,9 +28,9 @@ spring:
       client:
         registration:
           google:
+
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
-#              - openid
               - profile
               - email
 jwt:
