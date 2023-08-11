@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
@@ -25,5 +26,8 @@ public class FixedStartTimeJpaEntity {
 
     @Column(name = "fixed_start_time")
     private LocalTime fixedStartTime;
+
+    @Column(name = "update_date")
+    private LocalDate updateDate;
 
 }

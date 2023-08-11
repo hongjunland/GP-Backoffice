@@ -28,8 +28,8 @@ public class RegisterAttendanceService implements RegisterAttendanceUseCase {
         FixedStartTime fixedStartTime = loadFixedStartTimePort.loadFixedStartTime(command.getUserId());
 
         String attendanceStatus = Optional.ofNullable(fixedStartTime)
-                .map(fixedTime -> fixedTime.getFixedStartTime().plusMinutes(1))
-                .map(allowedTime -> allowedTime.isAfter(command.getStartTime()) ? "정상 출근" : "지각")
+                .map(FixedStartTime::getFixedStartTime)
+                .map(allowedTime -> !command.getStartTime().isAfter(allowedTime) ? "정상 출근" : "지각")
                 .orElse(null);
 
         Attendance attendance = Attendance.builder()
@@ -41,7 +41,7 @@ public class RegisterAttendanceService implements RegisterAttendanceUseCase {
                 .startTime(command.getStartTime())
                 .endTime(command.getEndTime())
                 .attendanceStatus(attendanceStatus)
-                .fixedStartTime(fixedStartTime.getFixedStartTime())
+                .fixedStartTime(attendanceStatus != null ? fixedStartTime.getFixedStartTime() : null)
                 .build();
 
         saveAttendancePort.saveAttendance(attendance);
