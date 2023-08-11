@@ -1,6 +1,5 @@
 package com.example.demo.attendance.adapter.in.web;
 
-import com.example.demo.attendance.adapter.in.request.RegisterFixedStartTimeRequest;
 import com.example.demo.attendance.adapter.in.request.UpdateFixedStartTimeRequest;
 import com.example.demo.attendance.application.port.in.command.UpdateFixedStartTimeCommand;
 import com.example.demo.attendance.application.port.in.usecase.UpdateFixedStartTimeUseCase;

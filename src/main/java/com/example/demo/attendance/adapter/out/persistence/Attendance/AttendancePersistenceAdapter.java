@@ -1,6 +1,7 @@
 package com.example.demo.attendance.adapter.out.persistence.Attendance;
 
 
+import com.example.demo.attendance.application.port.out.LoadAttendancePort;
 import com.example.demo.attendance.application.port.out.SaveAttendancePort;
 import com.example.demo.attendance.application.port.out.SearchAttendancePort;
 import com.example.demo.attendance.application.port.out.UpdateAttendanceStatusPort;
@@ -15,14 +16,21 @@ import java.util.List;
 @PersistenceAdapter
 @RequiredArgsConstructor
 public class AttendancePersistenceAdapter
-        implements SaveAttendancePort, SearchAttendancePort, UpdateAttendanceStatusPort {
+        implements SaveAttendancePort, LoadAttendancePort, SearchAttendancePort,
+        UpdateAttendanceStatusPort {
 
     private final AttendanceJpaRepo attendanceJpaRepo;
     private final AttendancePersistenceMapper mapper;
 
     @Override
     public void saveAttendance(Attendance attendance) {
-        attendanceJpaRepo.saveAttendance(mapper.mapToJpaEntity(attendance));
+        attendanceJpaRepo.save(mapper.mapToJpaEntity(attendance));
+    }
+
+    @Override
+    public Attendance loadAttendance(Attendance.AttendanceId attendanceId) {
+        return mapper.mapToDomainEntity(attendanceJpaRepo.findById(attendanceId.getValue()).get());
+        // todo : 없을 경우 에러 처리 해주기
     }
 
     @Override

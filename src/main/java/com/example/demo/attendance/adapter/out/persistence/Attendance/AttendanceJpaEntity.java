@@ -57,4 +57,7 @@ public class AttendanceJpaEntity {
     @Column(name = "fixed_start_time")
     private LocalTime fixedStartTime;
 
+    @Column(name = "late_reason")
+    private String lateReason;
+
 }

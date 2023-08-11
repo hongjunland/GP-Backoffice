@@ -23,6 +23,7 @@ public class Attendance {
     private LocalTime endTime;
     private String attendanceStatus;
     private LocalTime fixedStartTime;
+    private String lateReason;
 
     /*
     식별자 사용해서 해당 Domain Entity를 고유하게 식별해주기 위함입니다.
@@ -35,6 +36,7 @@ public class Attendance {
 
     public AttendanceJpaEntity toJpaEntity() {
         return AttendanceJpaEntity.builder()
+                .id(attendanceId != null ? attendanceId.getValue() : null)
                 .userId(userId)
                 .department(department)
                 .name(name)
@@ -44,7 +46,12 @@ public class Attendance {
                 .endTime(endTime)
                 .attendanceStatus(attendanceStatus)
                 .fixedStartTime(fixedStartTime)
+                .lateReason(lateReason)
                 .build();
+    }
+
+    public void updateLateReason(String lateReason) {
+        this.lateReason = lateReason;
     }
 
 }
