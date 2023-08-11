@@ -93,6 +93,7 @@ public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
                         Expressions.cases()
                                 .when(isLate).then("지각")
                                 .otherwise("정시 출근"))
+                .set(qAttendanceJpaEntity.fixedStartTime, fixedStartTime.getFixedStartTime())
                 .where(qAttendanceJpaEntity.userId.eq(fixedStartTime.getUserId()))
                 .execute();
     }

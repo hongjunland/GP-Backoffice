@@ -10,14 +10,21 @@ import java.time.LocalTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class FixedStartTime {
 
-    private final LocalTime fixedStartTime;
+    private final Long fixedStartTimeId;
+    private LocalTime fixedStartTime;
     private final Long userId;
 
     public FixedStartTimeJpaEntity toJpaEntity() {
         return FixedStartTimeJpaEntity.builder()
+                .id(fixedStartTimeId)
                 .fixedStartTime(fixedStartTime)
                 .userId(userId)
                 .build();
+    }
+
+    public FixedStartTime updateFixedStartTime(LocalTime newFixedStartTime) {
+        this.fixedStartTime = newFixedStartTime;
+        return this;
     }
 
 }

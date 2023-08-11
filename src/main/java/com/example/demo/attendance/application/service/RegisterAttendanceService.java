@@ -25,7 +25,9 @@ public class RegisterAttendanceService implements RegisterAttendanceUseCase {
 
     @Override
     public void registerAttendance(RegisterAttendanceCommand command) {
-        String attendanceStatus = Optional.ofNullable(loadFixedStartTimePort.loadFixedStartTime(command.getUserId()))
+        FixedStartTime fixedStartTime = loadFixedStartTimePort.loadFixedStartTime(command.getUserId());
+
+        String attendanceStatus = Optional.ofNullable(fixedStartTime)
                 .map(fixedTime -> fixedTime.getFixedStartTime().plusMinutes(1))
                 .map(allowedTime -> allowedTime.isAfter(command.getStartTime()) ? "정상 출근" : "지각")
                 .orElse(null);
@@ -39,6 +41,7 @@ public class RegisterAttendanceService implements RegisterAttendanceUseCase {
                 .startTime(command.getStartTime())
                 .endTime(command.getEndTime())
                 .attendanceStatus(attendanceStatus)
+                .fixedStartTime(fixedStartTime.getFixedStartTime())
                 .build();
 
         saveAttendancePort.saveAttendance(attendance);
