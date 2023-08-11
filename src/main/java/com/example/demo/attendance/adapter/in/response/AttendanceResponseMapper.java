@@ -14,6 +14,7 @@ public class AttendanceResponseMapper {
         List<SearchAttendanceResponse> searchAttendanceResponses = new ArrayList<>();
         for (Attendance attendance : attendances) {
             SearchAttendanceResponse response = SearchAttendanceResponse.builder()
+                    .attendanceId(attendance.getAttendanceId())
                     .department(attendance.getDepartment())
                     .name(attendance.getName())
                     .workDate(attendance.getWorkDate())

@@ -11,6 +11,7 @@ import com.example.demo.attendance.domain.FixedStartTime;
 import com.example.demo.common.annotaion.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @PersistenceAdapter
@@ -28,9 +29,16 @@ public class AttendancePersistenceAdapter
     }
 
     @Override
-    public Attendance loadAttendance(Attendance.AttendanceId attendanceId) {
+    public Attendance loadAttendanceByAttendanceId(Attendance.AttendanceId attendanceId) {
         return mapper.mapToDomainEntity(attendanceJpaRepo.findById(attendanceId.getValue()).get());
         // todo : 없을 경우 에러 처리 해주기
+    }
+
+    @Override
+    public Attendance loadAttendanceByUserIdAndWorkDate(Long userId, LocalDate workDate) {
+        return attendanceJpaRepo.findByUserIdAndWorkDate(userId, workDate)
+                .map(mapper::mapToDomainEntity)
+                .orElse(null);
     }
 
     @Override

@@ -54,4 +54,13 @@ public class Attendance {
         this.lateReason = lateReason;
     }
 
+    public void updateEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void updateAttendanceStatus(String attendanceStatus) {
+        this.attendanceStatus = attendanceStatus;
+    }
+
+
 }

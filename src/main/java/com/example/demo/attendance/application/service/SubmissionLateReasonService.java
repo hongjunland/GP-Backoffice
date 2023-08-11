@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.transaction.Transactional;
+import java.time.LocalTime;
 
 @Slf4j
 @UseCase
@@ -22,8 +23,12 @@ public class SubmissionLateReasonService implements SubmissionLateReasonUseCase 
 
     @Override
     public void submissionLateReason(SubmissionLateReasonCommand command) {
-        Attendance attendance = loadAttendancePort.loadAttendance(command.getAttendanceId());
+        Attendance attendance = loadAttendancePort.loadAttendanceByAttendanceId(command.getAttendanceId());
         attendance.updateLateReason(command.getLateReason());
+
+        if ("F-day".equals(command.getLateReason())) {
+            attendance.updateAttendanceStatus(attendance.getStartTime().isAfter(LocalTime.of(9, 30)) ? "지각" : "정상 출근");
+        }
         saveAttendancePort.saveAttendance(attendance);
     }
 }
