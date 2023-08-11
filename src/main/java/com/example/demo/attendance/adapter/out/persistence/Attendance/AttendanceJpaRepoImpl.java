@@ -31,27 +31,27 @@ public class AttendanceJpaRepoImpl implements AttendanceJpaRepoCustom {
     @Autowired
     private final EntityManager entityManager;
 
-    @Override
-    @Transactional
-    public void saveAttendance(AttendanceJpaEntity attendanceJpaEntity) {
-        long affected = updateAttendance(attendanceJpaEntity);
-        if (affected == 0) {
-            insertAttendance(attendanceJpaEntity);
-        }
-    }
-
-    private long updateAttendance(AttendanceJpaEntity attendanceJpaEntity) {
-        return jpaQueryFactory
-                .update(qAttendanceJpaEntity)
-                .set(qAttendanceJpaEntity.endTime, attendanceJpaEntity.getEndTime())
-                .where(qAttendanceJpaEntity.workDate.eq(attendanceJpaEntity.getWorkDate())
-                        .and(qAttendanceJpaEntity.name.eq(attendanceJpaEntity.getName())))
-                .execute();
-    }
-
-    private void insertAttendance(AttendanceJpaEntity attendanceJpaEntity) {
-        entityManager.persist(attendanceJpaEntity);
-    }
+//    @Override
+//    @Transactional
+//    public void saveAttendance(AttendanceJpaEntity attendanceJpaEntity) {
+//        long affected = updateAttendance(attendanceJpaEntity);
+//        if (affected == 0) {
+//            insertAttendance(attendanceJpaEntity);
+//        }
+//    }
+//
+//    private long updateAttendance(AttendanceJpaEntity attendanceJpaEntity) {
+//        return jpaQueryFactory
+//                .update(qAttendanceJpaEntity)
+//                .set(qAttendanceJpaEntity.endTime, attendanceJpaEntity.getEndTime())
+//                .where(qAttendanceJpaEntity.workDate.eq(attendanceJpaEntity.getWorkDate())
+//                        .and(qAttendanceJpaEntity.name.eq(attendanceJpaEntity.getName())))
+//                .execute();
+//    }
+//
+//    private void insertAttendance(AttendanceJpaEntity attendanceJpaEntity) {
+//        entityManager.persist(attendanceJpaEntity);
+//    }
 
     @Override
     public List<AttendanceJpaEntity> searchAttendanceByCriteria(AttendanceSearchCriteria attendanceSearchCriteria) {
