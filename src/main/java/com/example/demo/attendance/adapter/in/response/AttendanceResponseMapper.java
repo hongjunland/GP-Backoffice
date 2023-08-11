@@ -21,6 +21,8 @@ public class AttendanceResponseMapper {
                     .startTime(attendance.getStartTime())
                     .endTime(attendance.getEndTime())
                     .attendanceStatus(attendance.getAttendanceStatus())
+                    .fixedStartTime(attendance.getFixedStartTime())
+                    .lateReason(attendance.getLateReason())
                     .build();
 
             searchAttendanceResponses.add(response);

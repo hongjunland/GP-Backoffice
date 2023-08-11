@@ -21,5 +21,7 @@ public class SearchAttendanceResponse {
     private LocalTime startTime;
     private LocalTime endTime;
     private String attendanceStatus;
+    private LocalTime fixedStartTime;
+    private String lateReason;
 
 }

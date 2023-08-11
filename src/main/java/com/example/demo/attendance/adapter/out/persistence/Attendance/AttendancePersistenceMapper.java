@@ -22,6 +22,7 @@ public class AttendancePersistenceMapper {
                 .endTime(attendanceJpaEntity.getEndTime())
                 .attendanceStatus(attendanceJpaEntity.getAttendanceStatus())
                 .fixedStartTime(attendanceJpaEntity.getFixedStartTime())
+                .lateReason(attendanceJpaEntity.getLateReason())
                 .build();
     }
 
