@@ -48,7 +48,7 @@ dependencies {
 //	// mariadb
 //	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
-	// querydsl
+//	// querydsl
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 

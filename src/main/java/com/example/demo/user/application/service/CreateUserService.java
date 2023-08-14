@@ -19,13 +19,7 @@ class CreateUserService implements CreateUserUseCase {
 
     @Override
     public void createUser(CreateUserCommand command) {
-        User user = User.builder()
-                .email(command.getEmail())
-                .nickname(command.getNickname())
-                .name(command.getName())
-                .password(encoderPort.encode(command.getPassword()))
-                .build();
-
+        User user = User.withoutId( command.getEmail(), encoderPort.encode(command.getPassword()),command.getName(), command.getPosition());
         createUserPort.createUser(user);
     }
 }

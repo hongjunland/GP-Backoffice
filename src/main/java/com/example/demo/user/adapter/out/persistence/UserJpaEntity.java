@@ -22,6 +22,5 @@ class UserJpaEntity {
     private Long id;
     private String email;
     private String password;
-    private String nickname;
     private String name;
 }

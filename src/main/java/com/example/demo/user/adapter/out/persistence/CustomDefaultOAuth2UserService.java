@@ -44,7 +44,6 @@ public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService {
     private UserJpaEntity mapToJpaEntity(GoogleUserInfo userInfo){
         return UserJpaEntity.builder()
                 .email(userInfo.getEmail())
-                .nickname(userInfo.getFamily_name()+userInfo.getName())
                 .name(userInfo.getName())
                 .build();
     }

@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
+import java.util.stream.Collectors;
+
 
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
@@ -32,12 +35,21 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorApiResponse handleValidationException(MethodArgumentNotValidException ex) {
-        return ErrorApiResponse.of(HttpStatus.BAD_REQUEST.value(), ErrorMessage.INVALID_ARGUMENT.getMessage());
+        String message = ex.getBindingResult().getAllErrors().stream()
+                .map(objectError -> objectError.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+        return ErrorApiResponse.of(HttpStatus.BAD_REQUEST.value(), message);
     }
 
     @ExceptionHandler(TokenException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorApiResponse handleTokenException(TokenException ex) {
+        return ErrorApiResponse.of(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorApiResponse handleConstraintViolationException(ConstraintViolationException ex) {
         return ErrorApiResponse.of(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 

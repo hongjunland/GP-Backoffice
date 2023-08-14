@@ -14,4 +14,5 @@ public class UserResponse {
     private String password;
     private String nickname;
     private String name;
+    private int position;
 }

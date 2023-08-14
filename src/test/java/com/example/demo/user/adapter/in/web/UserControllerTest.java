@@ -4,7 +4,6 @@ import com.example.demo.common.SuccessApiResponse;
 import com.example.demo.user.adapter.in.web.request.CreateUserRequest;
 import com.example.demo.user.application.port.in.CreateUserUseCase;
 import com.example.demo.user.application.port.in.GetUserQuery;
-import com.example.demo.user.application.port.in.command.CreateUserCommand;
 import com.example.demo.user.adapter.in.web.response.UserResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +30,7 @@ class UserControllerTest {
     @Test
     public void shouldCreateUser_whenPostRequest(){
         // Given
-        CreateUserRequest userRequest = new CreateUserRequest("zxc123@naver.com", "비밀번호1@@", "홍길동", "닉네임12");
+        CreateUserRequest userRequest = new CreateUserRequest("zxc123@naver.com", "비밀번호1@@", "홍길동", 4);
 
         // When
         SuccessApiResponse response = userController.createUser(userRequest);

@@ -22,7 +22,7 @@ class LoadUserService implements GetUserQuery {
                 .email(user.getEmail())
                 .name(user.getName())
                 .password(user.getPassword())
-                .nickname(user.getNickname())
+                .position(user.getPosition().getDepth())
                 .build();
     }
 }

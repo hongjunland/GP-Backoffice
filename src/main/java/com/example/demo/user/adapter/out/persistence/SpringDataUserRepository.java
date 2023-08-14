@@ -6,8 +6,6 @@ import java.util.Optional;
 
 interface SpringDataUserRepository extends JpaRepository<UserJpaEntity, Long> {
     Optional<UserJpaEntity> findByEmail(String email);
-    Optional<UserJpaEntity> findByNickname(String email);
 
     boolean existsByEmail(String email);
-    boolean existsByNickname(String nickname);
 }

@@ -51,20 +51,20 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
                         .antMatchers(HttpMethod.POST, "/api/v1/auth/login", "/api/v1/users").permitAll()
                         .anyRequest().authenticated()
-                )
-                .oauth2Login()
-                .userInfoEndpoint()
-                .userService(customDefaultOAuth2UserService)
-                .and()
-                .authorizationEndpoint()
-                .baseUri("/oauth2/authorize")
-                .authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository)
-                .and()
-                .redirectionEndpoint()
-                .baseUri("/oauth2/callback/*")
-                .and()
-                .successHandler(oauth2AuthenticationSuccessHandler)
-                .failureHandler(oauth2AuthenticationFailureHandler);
+                );
+//                .oauth2Login()
+//                .userInfoEndpoint()
+//                .userService(customDefaultOAuth2UserService)
+//                .and()
+//                .authorizationEndpoint()
+//                .baseUri("/oauth2/authorize")
+//                .authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository)
+//                .and()
+//                .redirectionEndpoint()
+//                .baseUri("/oauth2/callback/*")
+//                .and()
+//                .successHandler(oauth2AuthenticationSuccessHandler)
+//                .failureHandler(oauth2AuthenticationFailureHandler);
 
                 http.addFilterBefore(new TokenAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 

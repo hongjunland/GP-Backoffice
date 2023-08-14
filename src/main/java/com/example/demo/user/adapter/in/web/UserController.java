@@ -8,7 +8,7 @@ import com.example.demo.user.application.port.in.GetUserQuery;
 import com.example.demo.user.application.port.in.command.CreateUserCommand;
 import com.example.demo.common.annotaion.WebAdapter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,7 +25,7 @@ class UserController {
         CreateUserCommand createUserCommand = CreateUserCommand.builder()
                 .email(createUserRequest.getEmail())
                 .name(createUserRequest.getName())
-                .nickname(createUserRequest.getNickname())
+                .position(createUserRequest.getPosition())
                 .password(createUserRequest.getPassword())
                 .build();
         createUserUseCase.createUser(createUserCommand);

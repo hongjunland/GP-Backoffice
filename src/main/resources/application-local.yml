@@ -28,7 +28,8 @@ spring:
       client:
         registration:
           google:
-
+            client-id: 232934331620-lqe9bo01at8ivgv40uvo7chvbfcr2i87.apps.googleusercontent.com
+            client-secret: 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
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - profile
