@@ -31,7 +31,6 @@ class UserDetailsServiceImplTest {
         UserJpaEntity userJpaEntity = UserJpaEntity.builder()
                 .id(1L)
                 .name("홍길동")
-                .nickname("닉네임")
                 .password("encodedPassword")
                 .email(email)
                 .build();

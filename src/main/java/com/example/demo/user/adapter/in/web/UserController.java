@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @WebAdapter
 @RestController
@@ -31,12 +32,19 @@ class UserController {
         createUserUseCase.createUser(createUserCommand);
         return SuccessApiResponse.of();
     }
+    // 목록 조회
     @GetMapping
-    public SuccessApiResponse getCurrentUser(@CurrentUser Long userId){
+    public SuccessApiResponse<?> getUserList(){
+        return SuccessApiResponse.of(getUserQuery.getUserList());
+    }
+    // 자기자신
+    @GetMapping("/profile")
+    public SuccessApiResponse<?> getCurrentUser(@CurrentUser Long userId){
         return SuccessApiResponse.of(getUserQuery.getUser(userId));
     }
-    @GetMapping("/{userId}")
-    public SuccessApiResponse getUserById(@PathVariable Long userId){
+    // 프로필 단일조회
+    @GetMapping("/profile/{userId}")
+    public SuccessApiResponse<?> getUserByUserId(@PathVariable Long userId){
         return SuccessApiResponse.of(getUserQuery.getUser(userId));
     }
 

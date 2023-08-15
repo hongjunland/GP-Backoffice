@@ -7,6 +7,9 @@ import com.example.demo.user.application.port.out.LoadUserPort;
 import com.example.demo.user.domain.User;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @PersistenceAdapter
 class UserLoadPersistenceAdapter implements LoadUserPort {
@@ -33,6 +36,16 @@ class UserLoadPersistenceAdapter implements LoadUserPort {
     @Override
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public List<User> searchUserList() {
+        List<UserJpaEntity> userJpaEntityList = userRepository.findAll();
+        System.out.println(userJpaEntityList);
+        List<User> userList = userJpaEntityList.stream()
+                .map((userJpaEntity) -> userMapper.mapToDomainEntity(userJpaEntity))
+                .collect(Collectors.toList());
+        return userList;
     }
 
 

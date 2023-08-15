@@ -1,6 +1,7 @@
 package com.example.demo.user.application.service;
 
 import com.example.demo.common.utils.Token;
+import com.example.demo.user.adapter.in.web.response.UserResponse;
 import com.example.demo.user.application.port.in.command.LoginCommand;
 import com.example.demo.user.application.port.out.LoadUserPort;
 import com.example.demo.user.application.port.out.LoginPort;
@@ -51,7 +52,6 @@ class LoginServiceTest {
         User user = User.builder()
                 .id(new User.UserId(1L))
                 .name("홍길동")
-                .nickname("닉네임")
                 .password(encodedPassword)
                 .email(email)
                 .build();
@@ -75,4 +75,5 @@ class LoginServiceTest {
         Assertions.assertEquals(loginResponse.getRefreshToken(), token.getRefreshToken());
         Assertions.assertEquals(loginResponse.getExpiration(), token.getExpiration().toString());
     }
+
 }

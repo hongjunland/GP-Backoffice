@@ -1,6 +1,7 @@
 package com.example.demo.user.adapter.out.persistence;
 
 import com.example.demo.common.utils.UserDetailsImpl;
+import com.example.demo.user.domain.Position;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,6 +26,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService {
     private final SpringDataUserRepository userRepository;
+    // OAuth 에서 응답 받은 유저 정보 추출
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
@@ -41,10 +43,12 @@ public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService {
                 .authorities(authorityList)
                 .build();
     }
+    // Google User의 속성들 -> JpaEntity
     private UserJpaEntity mapToJpaEntity(GoogleUserInfo userInfo){
         return UserJpaEntity.builder()
                 .email(userInfo.getEmail())
                 .name(userInfo.getName())
+                .position(Position.EMPLOYEE.getDepth())
                 .build();
     }
 }

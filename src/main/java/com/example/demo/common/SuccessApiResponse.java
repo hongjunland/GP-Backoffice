@@ -9,7 +9,7 @@ import org.springframework.lang.Nullable;
 @Getter
 @Setter
 public class SuccessApiResponse<T> extends ApiResponse{
-//    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
     // 데이터 있을 시
     private SuccessApiResponse(T data){

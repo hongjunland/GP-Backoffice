@@ -34,7 +34,6 @@ class UserPersistenceAdapterTest{
     public void givenExistingEmail_whenCreateUser_thenThrowException() {
         User user = User.builder()
                 .email("existing@email.com")
-                .nickname("nickname")
                 .build();
 
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(new UserJpaEntity()));
@@ -44,26 +43,6 @@ class UserPersistenceAdapterTest{
         });
 
         verify(userRepository, times(1)).findByEmail(user.getEmail());
-        verify(userRepository, never()).findByNickname(user.getNickname());
-    }
-
-    @DisplayName("유저등록시 닉네임 중복 검사")
-    @Test
-    public void givenExistingNickname_whenCreateUser_thenThrowException() {
-        User user = User.builder()
-                .email("new@email.com")
-                .nickname("existingNickname")
-                .build();
-
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
-        when(userRepository.findByNickname(user.getNickname())).thenReturn(Optional.of(new UserJpaEntity()));
-
-        assertThrows(UserAlreadyExistsException.class, () -> {
-            userPersistenceAdapter.createUser(user);
-        });
-
-        verify(userRepository, times(1)).findByNickname(user.getNickname());
-        verify(userRepository, times(1)).findByEmail(user.getEmail());
     }
 
     @DisplayName("유저등록 검사")
@@ -72,12 +51,10 @@ class UserPersistenceAdapterTest{
         User user = User.builder()
                 .email("zxc@naver.com")
                 .password("zxczxc")
-                .nickname("닉네임")
                 .name("홍길동")
                 .build();
 
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
-        when(userRepository.findByNickname(user.getNickname())).thenReturn(Optional.empty());
         when(userMapper.mapToJpaEntity(user)).thenReturn(new UserJpaEntity());
         when(userRepository.save(any(UserJpaEntity.class))).thenReturn(new UserJpaEntity());
         when(userMapper.mapToDomainEntity(any(UserJpaEntity.class))).thenReturn(user);

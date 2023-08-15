@@ -4,6 +4,7 @@ package com.example.demo.user.application.service;
 import com.example.demo.user.application.port.in.command.CreateUserCommand;
 import com.example.demo.user.application.port.out.CreateUserPort;
 import com.example.demo.user.application.port.out.PasswordEncoderPort;
+import com.example.demo.user.domain.Position;
 import com.example.demo.user.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,15 +35,15 @@ class CreateUserServiceTest {
         createUserCommand = CreateUserCommand.builder()
                 .email("zxc123@naver.com")
                 .password("originPassword")
-                .nickname("닉네임1")
                 .name("홍길동")
+                .position(4)
                 .build();
         expectedUser = User.builder()
                 .id(new User.UserId(1L))
                 .email("zxc123@naver.com")
                 .password("encodedPassword")
-                .nickname("닉네임1")
                 .name("홍길동")
+                .position(Position.EMPLOYEE)
                 .build();
     }
     @DisplayName("유저 생성")

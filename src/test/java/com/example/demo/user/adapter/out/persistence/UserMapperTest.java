@@ -1,5 +1,6 @@
 package com.example.demo.user.adapter.out.persistence;
 
+import com.example.demo.user.domain.Position;
 import com.example.demo.user.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,8 +26,8 @@ class UserMapperTest {
         UserJpaEntity userJpaEntity = UserJpaEntity.builder()
                 .id(1L)
                 .email("test@example.com")
-                .nickname("nickname")
                 .password("password")
+                .position(4)
                 .name("name")
                 .build();
 
@@ -34,7 +35,6 @@ class UserMapperTest {
 
         assertThat(user.getId().getValue()).isEqualTo(userJpaEntity.getId());
         assertThat(user.getEmail()).isEqualTo(userJpaEntity.getEmail());
-        assertThat(user.getNickname()).isEqualTo(userJpaEntity.getNickname());
         assertThat(user.getPassword()).isEqualTo(userJpaEntity.getPassword());
         assertThat(user.getName()).isEqualTo(userJpaEntity.getName());
     }
@@ -44,15 +44,14 @@ class UserMapperTest {
     void mapToJpaEntity() {
         User user = User.builder()
                 .email("test@example.com")
-                .nickname("nickname")
                 .password("password")
+                .position(Position.EMPLOYEE)
                 .name("name")
                 .build();
 
         UserJpaEntity userJpaEntity = userMapper.mapToJpaEntity(user);
 
         assertThat(userJpaEntity.getEmail()).isEqualTo(user.getEmail());
-        assertThat(userJpaEntity.getNickname()).isEqualTo(user.getNickname());
         assertThat(userJpaEntity.getPassword()).isEqualTo(user.getPassword());
         assertThat(userJpaEntity.getName()).isEqualTo(user.getName());
     }

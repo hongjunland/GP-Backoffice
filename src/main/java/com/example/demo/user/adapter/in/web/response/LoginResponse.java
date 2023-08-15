@@ -3,12 +3,13 @@ package com.example.demo.user.adapter.in.web.response;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Value;
 
-@AllArgsConstructor
-@Getter
+@Value
 @Builder
+@AllArgsConstructor
 public class LoginResponse {
-    private final String accessToken;
-    private final String refreshToken;
-    private final String expiration;
+    private String accessToken;
+    private String refreshToken;
+    private String expiration;
 }
