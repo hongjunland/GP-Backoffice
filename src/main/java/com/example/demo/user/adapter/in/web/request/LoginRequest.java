@@ -3,6 +3,7 @@ package com.example.demo.user.adapter.in.web.request;
 import com.example.demo.common.SelfValidating;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -15,7 +16,6 @@ public class LoginRequest extends SelfValidating<LoginRequest> {
     private String email;
     @NotBlank
     private String password;
-
     @JsonCreator
     public LoginRequest(@JsonProperty("email")String email, @JsonProperty("password") String password) {
         this.email = email;

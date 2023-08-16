@@ -52,5 +52,4 @@ public class GlobalExceptionAdvice {
     public ErrorApiResponse handleConstraintViolationException(ConstraintViolationException ex) {
         return ErrorApiResponse.of(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
-
 }

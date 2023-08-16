@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -25,10 +26,6 @@ class LoadUserServiceTest {
     private LoadUserService loadUserService;
     @Mock
     private LoadUserPort loadUserPort;
-    @BeforeEach
-    public void setup(){
-
-    }
     @DisplayName("유저 id 기반 단일조회 테스트")
     @Test
     public void getUser_test(){
@@ -55,7 +52,12 @@ class LoadUserServiceTest {
     @Test
     public void getUserList_test(){
         // Given
-        when(loadUserPort.searchUserList()).thenReturn(new ArrayList<>());
+        List<User> userList = Arrays.asList(
+                User.withId(new User.UserId(1L),"zxc123@naver.com","dasdsa","홍길동",Position.EMPLOYEE.getDepth()),
+                User.withId(new User.UserId(2L),"zxc12@naver.com","dasdsa","김길동",Position.EXECUTIVE.getDepth()),
+                User.withId(new User.UserId(3L),"zxc1243@naver.com","dasdsa","박길동",Position.EMPLOYEE.getDepth())
+        );
+        when(loadUserPort.searchUserList()).thenReturn(userList);
 
         // When
         List<UserResponse> userResponseList = loadUserService.getUserList();

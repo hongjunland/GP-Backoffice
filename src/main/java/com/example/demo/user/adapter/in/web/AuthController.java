@@ -17,6 +17,7 @@ class AuthController {
 
     @PostMapping("/login")
     public SuccessApiResponse login(@RequestBody LoginRequest loginRequest){
+
         LoginCommand loginCommand = LoginCommand.builder()
                 .email(loginRequest.getEmail())
                 .password(loginRequest.getPassword())
