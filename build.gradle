@@ -83,6 +83,7 @@ jacocoTestReport {
                             '**/JpaAuditingConfig*',
                             '**/common/**',
                             '**/*Builder*',
+                            '**/*Q**'
                     ])
                 })
         )
@@ -98,7 +99,8 @@ jacocoTestCoverageVerification {
                     '**/Swagger*',
                     '**/PasswordEncoderConfig*',
                     '**/JpaAuditingConfig*',
-                    '**/common/**'
+                    '**/common/**',
+                    '**/*Q**'
             ]
         }
     }

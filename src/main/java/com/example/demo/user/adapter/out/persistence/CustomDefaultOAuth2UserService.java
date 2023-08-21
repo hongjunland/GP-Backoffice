@@ -30,7 +30,7 @@ public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
-        GoogleUserInfo userInfo = GoogleUserInfo.of(oAuth2User.getAttributes());
+        GoogleUser userInfo = mapToGoogleUser(oAuth2User.getAttributes());
         String email = userInfo.getEmail();
         Optional<UserJpaEntity> userJpaEntity = userRepository.findByEmail(email);
         Long userId = userJpaEntity.map(UserJpaEntity::getId)
@@ -44,11 +44,20 @@ public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService {
                 .build();
     }
     // Google User의 속성들 -> JpaEntity
-    private UserJpaEntity mapToJpaEntity(GoogleUserInfo userInfo){
+    private UserJpaEntity mapToJpaEntity(GoogleUser userInfo){
         return UserJpaEntity.builder()
                 .email(userInfo.getEmail())
                 .name(userInfo.getName())
                 .position(Position.EMPLOYEE.getDepth())
                 .build();
+    }
+    private GoogleUser mapToGoogleUser(Map<String, Object> attributes) {
+        String sub = (String)attributes.get("sub");
+        String name = (String) attributes.get("name");
+        String givenName = (String) attributes.get("given_name");
+        String familyName = (String) attributes.get("family_name");
+        String picture = (String) attributes.get("picture");
+        String email = (String) attributes.get("email");
+        return new GoogleUser(sub, name, givenName, familyName, picture, email);
     }
 }
