@@ -1,15 +1,14 @@
 package com.example.demo.attendance.application.port.in.command;
 
 import com.example.demo.attendance.domain.constant.Department;
-import com.example.demo.attendance.domain.Attendance;
 import com.example.demo.attendance.domain.constant.DayType;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Data
+@Getter
 @Builder
 public class RegisterAttendanceCommand {
 

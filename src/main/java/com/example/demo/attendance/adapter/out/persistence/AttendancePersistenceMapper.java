@@ -3,8 +3,12 @@ package com.example.demo.attendance.adapter.out.persistence;
 import com.example.demo.attendance.domain.Attendance;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class AttendancePersistenceMapper {
+
     public Attendance mapToDomainEntity(AttendanceJpaEntity attendanceJpaEntity) {
 
         return Attendance.builder()
@@ -17,6 +21,14 @@ public class AttendancePersistenceMapper {
                 .startTime(attendanceJpaEntity.getStartTime())
                 .endTime(attendanceJpaEntity.getEndTime())
                 .build();
+    }
+
+    public List<Attendance> mapToDomainEntities(List<AttendanceJpaEntity> attendanceJpaEntities) {
+        List<Attendance> attendances = new ArrayList<>();
+        for (AttendanceJpaEntity attendanceJpaEntity : attendanceJpaEntities) {
+            attendances.add(mapToDomainEntity(attendanceJpaEntity));
+        }
+        return attendances;
     }
 
     public AttendanceJpaEntity mapToJpaEntity(Attendance attendance) {
