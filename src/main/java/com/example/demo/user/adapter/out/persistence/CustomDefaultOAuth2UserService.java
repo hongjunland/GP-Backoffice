@@ -24,12 +24,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService {
+//public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService {
+public class CustomDefaultOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final SpringDataUserRepository userRepository;
+    private final DefaultOAuth2UserService delegate;
     // OAuth 에서 응답 받은 유저 정보 추출
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
-        OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
+        OAuth2User oAuth2User = delegate.loadUser(oAuth2UserRequest);
         GoogleUser userInfo = mapToGoogleUser(oAuth2User.getAttributes());
         String email = userInfo.getEmail();
         Optional<UserJpaEntity> userJpaEntity = userRepository.findByEmail(email);
@@ -60,4 +62,5 @@ public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService {
         String email = (String) attributes.get("email");
         return new GoogleUser(sub, name, givenName, familyName, picture, email);
     }
+
 }
