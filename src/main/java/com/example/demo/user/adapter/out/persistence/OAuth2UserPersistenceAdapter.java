@@ -1,5 +1,7 @@
 package com.example.demo.user.adapter.out.persistence;
 
+import com.example.demo.common.annotaion.PersistenceAdapter;
+import com.example.demo.common.annotaion.WebAdapter;
 import com.example.demo.common.utils.UserDetailsImpl;
 import com.example.demo.user.domain.Position;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +24,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Service
+@PersistenceAdapter
 @RequiredArgsConstructor
-//public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService {
-public class CustomDefaultOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+public class OAuth2UserPersistenceAdapter implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final SpringDataUserRepository userRepository;
     private final DefaultOAuth2UserService delegate;
     // OAuth 에서 응답 받은 유저 정보 추출

@@ -2,10 +2,10 @@ package com.example.demo.common.config;
 
 import com.example.demo.common.utils.TokenAuthenticationFilter;
 import com.example.demo.common.utils.TokenProvider;
-import com.example.demo.user.adapter.out.persistence.CustomDefaultOAuth2UserService;
 import com.example.demo.user.adapter.out.persistence.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.example.demo.user.adapter.out.persistence.OAuth2AuthenticationFailureHandler;
 import com.example.demo.user.adapter.out.persistence.OAuth2AuthenticationSuccessHandler;
+import com.example.demo.user.adapter.out.persistence.OAuth2UserPersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +34,7 @@ public class WebSecurityConfig {
     private final TokenProvider tokenProvider;
     private final OAuth2AuthenticationSuccessHandler oauth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oauth2AuthenticationFailureHandler;
-    private final CustomDefaultOAuth2UserService customDefaultOAuth2UserService;
+    private final OAuth2UserPersistenceAdapter oAuth2UserPersistenceAdapter;
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
     @Bean
@@ -56,7 +56,7 @@ public class WebSecurityConfig {
                 )
                 .oauth2Login()
                 .userInfoEndpoint()
-                .userService(customDefaultOAuth2UserService)
+                .userService(oAuth2UserPersistenceAdapter)
                 .and()
                 .authorizationEndpoint()
                 .baseUri("/oauth2/authorize")

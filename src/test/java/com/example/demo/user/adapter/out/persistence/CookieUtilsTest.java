@@ -3,7 +3,6 @@ package com.example.demo.user.adapter.out.persistence;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.servlet.http.Cookie;
@@ -14,8 +13,7 @@ import java.io.Serializable;
 import java.util.Optional;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -31,21 +29,34 @@ class CookieUtilsTest {
     @DisplayName("쿠키 조회 테스트")
     @Test
     void getCookie_test() {
+        // Given
         Cookie[] cookies = {new Cookie("cookieName", "cookieValue")};
         when(request.getCookies()).thenReturn(cookies);
 
+        // When
         Optional<Cookie> result = CookieUtils.getCookie(request, "cookieName");
+
+        // Then
         assertTrue(result.isPresent());
         assertEquals("cookieValue", result.get().getValue());
+    }
+    @Test
+    void zxc(){
+        Cookie[] cookies = new Cookie[]{};
+        for (Cookie cookie : cookies){
+            System.out.println(1);
+        }
     }
 
     @DisplayName("쿠키 없는 조회 테스트")
     @Test
     void getCookie_isEmpty_test() {
+        // Given
         when(request.getCookies()).thenReturn(null);
-
+        // When
         Optional<Cookie> result = CookieUtils.getCookie(request, "cookieName");
-        assertTrue(!result.isPresent());
+        //Then
+        assertFalse(result.isPresent());
     }
 
     @DisplayName("쿠키 추가 테스트")
@@ -66,6 +77,7 @@ class CookieUtilsTest {
 
         verify(response).addCookie(any(Cookie.class));
     }
+
     @DisplayName("직렬화, 역직렬화 테스트")
     @Test
     void serializeAndDeserialize_test() {
